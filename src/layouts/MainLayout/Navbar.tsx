@@ -1,4 +1,5 @@
 import Logo from "@/assets/images/Logo";
+import { ModeToggle } from "@/components/shared/modeToggle";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -14,10 +15,10 @@ import {
 import { Link } from "react-router";
 
 const navigationLinks = [
-  { href: "#", label: "Home", active: true },
+  { href: "/", label: "Home", active: true },
   { href: "#", label: "Features" },
   { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+  { href: "/about", label: "About" },
 ];
 
 const Navbar = () => {
@@ -101,8 +102,9 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="text-sm">
-            <a href="#">Login</a>
+          <ModeToggle />
+          <Button asChild className="text-sm text-white">
+            <Link to="/login">Login</Link>
           </Button>
         </div>
       </div>
