@@ -1,6 +1,6 @@
 import { baseApi } from "../../baseApi";
 
-export const walletApi = baseApi.injectEndpoints({
+export const transactionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     addMoney: builder.mutation({
       query: (data) => ({
@@ -75,4 +75,4 @@ export const {
   useReverseTransactionMutation,
   useGetAllTransactionsQuery,
   useGetMyTransactionsQuery,
-} = walletApi;
+} = transactionApi;
