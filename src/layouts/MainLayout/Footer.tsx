@@ -102,8 +102,9 @@ const Footer = () => {
           </div>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
             <div>
-              <p className="font-medium text-gray-900">Services</p>
-
+              <p className="font-medium text-foreground/90 hover:text-foreground">
+                Services
+              </p>
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
                   <a
@@ -114,7 +115,6 @@ const Footer = () => {
                     1on1 Coaching{" "}
                   </a>
                 </li>
-
                 <li>
                   <a
                     href="#"
@@ -124,7 +124,6 @@ const Footer = () => {
                     Company Review{" "}
                   </a>
                 </li>
-
                 <li>
                   <a
                     href="#"
@@ -134,7 +133,6 @@ const Footer = () => {
                     Accounts Review{" "}
                   </a>
                 </li>
-
                 <li>
                   <a
                     href="#"
@@ -144,7 +142,6 @@ const Footer = () => {
                     HR Consulting{" "}
                   </a>
                 </li>
-
                 <li>
                   <a
                     href="#"
@@ -157,7 +154,9 @@ const Footer = () => {
               </ul>
             </div>
             <div>
-              <p className="font-medium text-gray-900">Company</p>
+              <p className="font-medium text-foreground/90 hover:text-foreground">
+                Company
+              </p>
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
                   <a
@@ -189,7 +188,9 @@ const Footer = () => {
               </ul>
             </div>
             <div>
-              <p className="font-medium text-gray-900">Helpful Links</p>
+              <p className="font-medium text-foreground/90 hover:text-foreground">
+                Helpful Links
+              </p>
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
                   <a
@@ -221,7 +222,9 @@ const Footer = () => {
               </ul>
             </div>
             <div>
-              <p className="font-medium text-gray-900">Legal</p>
+              <p className="font-medium text-foreground/90 hover:text-foreground">
+                Legal
+              </p>
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
                   <a

@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IUserInfoResponse } from "@/types";
+import type { IResponse, IUserInfoResponse } from "@/types";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,7 +26,7 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["ALL_USER"],
     }),
-    userInfo: builder.query<IUserInfoResponse, null>({
+    userInfo: builder.query<IResponse<IUserInfoResponse>, null>({
       query: () => ({
         url: "/users/me",
         method: "GET",
