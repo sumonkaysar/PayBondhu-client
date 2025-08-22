@@ -27,7 +27,7 @@ export const userSidebarItems = [
     items: [
       {
         title: "My Transactions",
-        url: "/user/transactions",
+        url: "/user/my-transactions",
         component: MyTransactions,
       },
       {

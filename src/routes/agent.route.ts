@@ -25,7 +25,7 @@ export const agentSidebarItems = [
     items: [
       {
         title: "My Transactions",
-        url: "/agent/transactions",
+        url: "/agent/my-transactions",
         component: MyTransactions,
       },
       {
