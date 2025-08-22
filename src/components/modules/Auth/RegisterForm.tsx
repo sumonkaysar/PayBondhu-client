@@ -156,11 +156,8 @@ const RegisterForm = ({
                       {Object.keys(Role).map(
                         (key, i: number) =>
                           key !== Role.ADMIN && (
-                            <SelectItem
-                              key={i}
-                              value={Role[key as keyof typeof Role]}
-                            >
-                              {Role[key as keyof typeof Role]}
+                            <SelectItem key={i} value={Role[key as TRole]}>
+                              {Role[key as TRole]}
                             </SelectItem>
                           )
                       )}

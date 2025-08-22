@@ -2,16 +2,17 @@ import Logo from "@/assets/images/Logo";
 
 const Footer = () => {
   return (
-    <footer>
-      <div className="container mx-auto space-y-8 py-6">
+    <footer className="border-t">
+      <div className="container mx-auto space-y-8 py-10 md:py-16 px-6">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div>
               <Logo className="w-32" />
             </div>
             <p className="mt-4 max-w-xs text-muted-foreground">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non
-              cupiditate quae nam molestias.
+              PayBondhu is a secure and fast digital wallet that allows you to
+              send, receive, and manage money anytime, anywhere. Enjoy seamless
+              transactions, reliable security, and an easy-to-use experience.
             </p>
             <ul className="mt-8 flex gap-6">
               <li>
@@ -265,8 +266,8 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <p className="text-xs text-gray-500 mb-6">
-          &copy; 2025. PayBondhu. All rights reserved.
+        <p className="text-xs text-gray-500">
+          &copy; {new Date().getFullYear()} PayBondhu. All rights reserved.
         </p>
       </div>
     </footer>

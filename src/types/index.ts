@@ -1,3 +1,17 @@
+import { Role } from "@/consts/auth.const";
+import type { ComponentType } from "react";
+
+export type TRole = keyof typeof Role;
+
+export interface ISidebarItem {
+  title: string;
+  items: {
+    title: string;
+    url: string;
+    component: ComponentType;
+  }[];
+}
+
 interface IMeta {
   page: number;
   limit: number;
@@ -18,7 +32,7 @@ export interface IUserInfoResponse {
   name: string;
   phoneNumber: string;
   password: string;
-  role: string;
+  role: TRole;
   status: string;
   createdAt: string;
   updatedAt: string;

@@ -28,17 +28,16 @@ const navigationLinks = [
 const Navbar = () => {
   const { data } = useUserInfoQuery(null);
   const userData = data?.data;
-  console.log(userData);
 
   return (
-    <header className="border-b">
-      <div className="container mx-auto flex h-16 items-center justify-between gap-4">
+    <header className="border-b sticky top-0 bg-background z-50">
+      <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-6">
         <div className="flex items-center gap-2">
           {/* Mobile menu trigger */}
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                className="group size-8 md:hidden"
+                className="group size-8 md:hidden mr-4 max-w-fit"
                 variant="ghost"
                 size="icon"
               >
