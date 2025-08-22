@@ -36,5 +36,12 @@ export interface IUserInfoResponse {
   status: string;
   createdAt: string;
   updatedAt: string;
-  wallet: string;
+  wallet: IWalletResponse;
+}
+
+export interface IWalletResponse {
+  _id: string;
+  user: string;
+  isBlocked: boolean;
+  balance: number;
 }
