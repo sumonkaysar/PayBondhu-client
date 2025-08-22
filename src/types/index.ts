@@ -12,3 +12,15 @@ export interface IResponse<T> {
   data: T;
   meta?: IMeta;
 }
+
+export interface IUserInfoResponse {
+  _id: string;
+  name: string;
+  phoneNumber: string;
+  password: string;
+  role: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  wallet: string;
+}

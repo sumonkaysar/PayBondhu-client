@@ -1,4 +1,4 @@
-import { baseApi } from "../../baseApi";
+import { baseApi } from "@/redux/baseApi";
 
 export const walletApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

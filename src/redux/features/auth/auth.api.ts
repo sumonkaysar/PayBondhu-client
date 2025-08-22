@@ -1,15 +1,22 @@
-import { baseApi } from "../../baseApi";
+import { baseApi } from "@/redux/baseApi";
+import type { ILoginResponse } from "@/redux/features/auth/auth.type";
+import type { IResponse } from "@/types";
+import { loginSchema } from "@/validations/auth.validation";
+import type z from "zod";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
+    login: builder.mutation<
+      IResponse<ILoginResponse>,
+      z.infer<typeof loginSchema>
+    >({
       query: (data) => ({
         url: "/auth/login",
         method: "POST",
         data,
       }),
     }),
-    logout: builder.mutation({
+    logout: builder.mutation<null, null>({
       query: () => ({
         url: "/auth/logout",
         method: "GET",

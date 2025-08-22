@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useUserInfoQuery } from "@/redux/features/user/user.api";
 import { Link } from "react-router";
 
 const navigationLinks = [
@@ -22,6 +23,10 @@ const navigationLinks = [
 ];
 
 const Navbar = () => {
+  const { data } = useUserInfoQuery(undefined);
+  const userData = data?.data;
+  console.log(userData);
+
   return (
     <header className="border-b">
       <div className="container mx-auto flex h-16 items-center justify-between gap-4">
@@ -103,9 +108,15 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <Button asChild className="text-sm text-white">
-            <Link to="/login">Login</Link>
-          </Button>
+          {userData?.email ? (
+            <Button variant="outline" className="text-sm">
+              Logout
+            </Button>
+          ) : (
+            <Button asChild className="text-sm text-white">
+              <Link to="/login">Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
