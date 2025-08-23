@@ -1,89 +1,176 @@
-import Loader from "@/components/shared/Loader";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useUserInfoQuery } from "@/redux/features/user/user.api";
-import { useGetMyWalletQuery } from "@/redux/features/wallet/wallet.api";
-import { CircleDotIcon, Wallet, XCircle } from "lucide-react";
+import { TransactionStatus, TransactionType } from "@/consts/transaction.type";
+import { useGetMyTransactionsQuery } from "@/redux/features/transaction/transaction.api";
+import {
+  useGetUserStatsQuery,
+  useUserInfoQuery,
+} from "@/redux/features/user/user.api";
+import {
+  ArrowDownCircle,
+  ArrowUpCircle,
+  History,
+  Send,
+  Wallet,
+} from "lucide-react";
 import { Link } from "react-router";
 
-const WalletPage = () => {
+export default function WalletPage() {
   const { data: userData } = useUserInfoQuery(null);
   const user = userData?.data;
 
-  const { data: myWalletData, isLoading } = useGetMyWalletQuery(null);
-  const myWallet = myWalletData?.data;
+  const { data: userStatsData } = useGetUserStatsQuery(null);
+  const userStats = userStatsData?.data;
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  const { data: transactionData } = useGetMyTransactionsQuery({ limit: 5 });
+  const transactions = transactionData?.data || [];
 
   return (
-    <div className="p-6">
-      <Card className="shadow-lg">
-        <CardHeader className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <Wallet className="w-6 h-6 text-green-500" />
-            My Wallet
-          </CardTitle>
-          <Badge
-            variant={myWallet?.isBlocked ? "destructive" : "default"}
-            className="text-white"
+    <div className="min-h-screen p-6">
+      <div className="max-w-5xl mx-auto space-y-6">
+        <Card className="bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-xl rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-2xl flex items-center gap-2">
+              <Wallet className="w-7 h-7" />
+              My Wallet
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex justify-between items-center">
+            <div>
+              <p className="text-lg text-gray-200">Available Balance</p>
+              <h1 className="text-4xl font-bold mt-1">
+                ৳{user?.wallet?.balance || 0}
+              </h1>
+            </div>
+            <Avatar className="w-20 h-20 border-4 border-white shadow-md">
+              <AvatarFallback className="bg-transparent text-2xl font-bold">
+                {user?.name
+                  ?.split(" ")
+                  ?.map((n) => n.charAt(0)?.toUpperCase()) || "U"}
+              </AvatarFallback>
+            </Avatar>
+          </CardContent>
+        </Card>
+        <div className="grid grid-cols-3 gap-4">
+          <Button
+            variant="outline"
+            className="flex flex-col gap-2 h-24 shadow-md border hover:scale-105 transition-all rounded-xl"
           >
-            {myWallet?.isBlocked ? (
-              <>
-                <XCircle />
-                Blocked
-              </>
+            <ArrowDownCircle className="w-7 h-7 text-green-500" />
+            Deposit Money
+          </Button>
+          <Button
+            variant="outline"
+            className="flex flex-col gap-2 h-24 shadow-md border hover:scale-105 transition-all rounded-xl"
+          >
+            <ArrowUpCircle className="w-7 h-7 text-red-500" />
+            Withdraw Money
+          </Button>
+          <Button
+            variant="outline"
+            className="flex flex-col gap-2 h-24 shadow-md border hover:scale-105 transition-all rounded-xl"
+          >
+            <Send className="w-7 h-7 text-blue-500" />
+            Send Money
+          </Button>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <Card className="p-5 rounded-xl bg-gradient-to-br from-green-50 to-green-100 dark:from-green-400 dark:to-green-700 border border-green-200 dark:border-green-500 shadow-sm">
+            <p className="text-gray-500 dark:text-foreground">Total Deposits</p>
+            <h2 className="text-2xl font-bold text-green-700 dark:text-white">
+              {userStats?.totalDeposits || 0}
+            </h2>
+          </Card>
+          <Card className="p-5 rounded-xl bg-gradient-to-br from-red-50 to-red-100 dark:from-red-400 dark:to-red-700 border border-red-200 dark:border-red-500 shadow-sm">
+            <p className="text-gray-500 dark:text-foreground">
+              Total Withdrawals
+            </p>
+            <h2 className="text-2xl font-bold text-red-700 dark:text-white">
+              {userStats?.totalWithdrawals || 0}
+            </h2>
+          </Card>
+          <Card className="p-5 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-400 dark:to-blue-700 border border-blue-200 dark:border-blue-500 shadow-sm">
+            <p className="text-gray-500 dark:text-foreground">Total Sent</p>
+            <h2 className="text-2xl font-bold text-blue-700 dark:text-white">
+              {userStats?.totalTransactions || 0}
+            </h2>
+          </Card>
+        </div>
+        <Card className="shadow-md rounded-2xl">
+          <CardHeader className="flex flex-row justify-between items-center">
+            <CardTitle className="flex items-center gap-2">
+              <History className="w-5 h-5 text-gray-600" />
+              Recent Transactions
+            </CardTitle>
+            <Button variant="link" className="text-blue-600 text-sm">
+              <Link to={`/${user?.role.toLowerCase()}/my-transactions`}>
+                View All
+              </Link>
+            </Button>
+          </CardHeader>
+          <CardContent>
+            {transactions?.length > 0 ? (
+              <div className="divide-y">
+                {transactions.map((txn) => (
+                  <div
+                    key={txn._id}
+                    className="grid grid-cols-[1fr_1fr_100px] items-center py-3"
+                  >
+                    <div>
+                      <p className="font-medium text-gray-800 dark:text-foreground">
+                        {txn.type}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {new Date(txn.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <div>
+                      <p
+                        className={`font-semibold ${
+                          txn.type === TransactionType.ADD_MONEY ||
+                          txn.type === TransactionType.CASH_IN
+                            ? "text-green-600 dark:text-green-500"
+                            : txn.type === TransactionType.WITHDRAW ||
+                              txn.type === TransactionType.CASH_OUT ||
+                              txn.type === TransactionType.SEND_MONEY
+                            ? "text-red-600 dark:text-red-500"
+                            : "text-blue-600 dark:text-blue-500"
+                        }`}
+                      >
+                        {txn.type === TransactionType.ADD_MONEY ||
+                        txn.type === TransactionType.CASH_IN
+                          ? "+"
+                          : "-"}
+                        ৳{txn.amount}
+                      </p>
+                    </div>
+                    <div>
+                      <Badge
+                        className="text-white"
+                        variant={
+                          txn.status === TransactionStatus.COMPLETED
+                            ? "default"
+                            : txn.status === TransactionStatus.PENDING
+                            ? "secondary"
+                            : "destructive"
+                        }
+                      >
+                        {txn.status}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <>
-                <CircleDotIcon />
-                Active
-              </>
+              <p className="text-gray-500 text-center py-6">
+                No recent transactions
+              </p>
             )}
-          </Badge>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <p className="text-sm text-gray-500">Wallet ID</p>
-              <p className="font-medium">{myWallet?._id}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Owner</p>
-              <p className="font-medium">{user?.name}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Phone</p>
-              <p className="font-medium">{user?.phoneNumber}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Role</p>
-              <p className="font-medium">{user?.role}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Balance</p>
-              <p className="font-bold text-xl">৳ {myWallet?.balance}</p>
-            </div>
-          </div>
-          <div className="flex gap-4 mt-6">
-            <Button variant="default" className="text-white">
-              <Link to="/user/add-money">Add Money</Link>
-            </Button>
-            <Button variant="outline">
-              <Link to="/user/withdraw">Withdraw</Link>
-            </Button>
-            <Button variant="outline">
-              <Link to="/user/send-money">Send Money</Link>
-            </Button>
-            <Button variant="outline">
-              <Link to="/user/cash-out">Cash Out</Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
-};
-
-export default WalletPage;
+}

@@ -1,117 +1,163 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useGetMyTransactionsQuery } from "@/redux/features/transaction/transaction.api";
-import { useUserInfoQuery } from "@/redux/features/user/user.api";
-import { Edit, LogOut, Phone, Shield, User, Wallet } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import {
+  useGetUserStatsQuery,
+  useUserInfoQuery,
+} from "@/redux/features/user/user.api";
+import {
+  Activity,
+  Calendar,
+  Pencil,
+  Phone,
+  ShieldCheck,
+  ShieldUser,
+  User,
+  Wallet,
+} from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 
-const Profile = () => {
+export default function ProfilePage() {
   const { data: userData } = useUserInfoQuery(null);
   const user = userData?.data;
 
-  const { data: transactionsData } = useGetMyTransactionsQuery(null);
-  const transactions = transactionsData?.data;
+  const { data: userStatsData } = useGetUserStatsQuery(null);
+  const userStats = userStatsData?.data;
 
-  const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState(user?.name || "");
+  const [formData, setFormData] = useState({
+    name: user?.name,
+  });
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    navigate("/login");
-  };
-
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="min-h-screen p-6 flex items-center justify-center">
-      <Card className="w-full max-w-3xl shadow-xl border rounded-2xl">
-        <CardHeader className="flex items-center flex-col gap-2">
-          <Avatar className="w-24 h-24">
-            <AvatarImage
-              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`}
-            />
-            <AvatarFallback className="">
-              {user?.name?.charAt(0)?.toUpperCase() || "U"}
-            </AvatarFallback>
-          </Avatar>
-          <CardTitle className="text-2xl font-bold dark:text-foreground">
-            {user?.name}
-          </CardTitle>
-          <p className="text-gray-500 text-sm flex items-center gap-1">
-            <Phone className="w-4 h-4" />
-            {user?.phoneNumber}
-          </p>
-          <p className="text-sm text-primary flex items-center gap-1 font-medium">
-            <Shield className="w-4 h-4" />
-            {user?.role}
-          </p>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div>
-            <label className="text-gray-600 font-medium">Full Name</label>
-            <div className="flex gap-3 mt-1">
-              <Input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                disabled={!isEditing}
-                className="border-gray-900"
-              />
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={handleEditToggle}
-                className="border-gray-900"
-              >
-                <Edit className="w-4 h-4" />
-              </Button>
+    <div className="p-6">
+      <div className="max-w-5xl mx-auto space-y-6">
+        <Card className="bg-gradient-to-r to-indigo-600 from-purple-600 text-white shadow-xl rounded-2xl">
+          <CardContent className="flex items-center gap-6 p-6">
+            <Avatar className="w-24 h-24 border-4 border-white shadow-lg">
+              <AvatarFallback className="bg-transparent text-2xl font-bold">
+                {user?.name
+                  ?.split(" ")
+                  ?.map((n) => n.charAt(0)?.toUpperCase()) || "U"}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <h1 className="text-3xl font-bold">{user?.name}</h1>
+              <p className="text-gray-200">{user?.phoneNumber}</p>
+              <Badge className="mt-2 bg-green-500 text-white shadow-md px-3 py-1 rounded-lg">
+                {user?.role}
+              </Badge>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <Card className="p-4 border border-gray-900 rounded-xl bg-gradient-to-tr from-slate-900 to-emerald-900 shadow-sm">
-              <div className="flex items-center gap-3">
-                <Wallet className="w-8 h-8 text-blue-500" />
-                <div>
-                  <p className="text-sm text-muted-foreground">
-                    Wallet Balance
-                  </p>
-                  <h3 className="text-xl font-bold text-white">
-                    ৳{user?.wallet?.balance || 0}
-                  </h3>
+          </CardContent>
+        </Card>
+        <div className="grid grid-cols-3 gap-4">
+          <Card className="p-5 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-400 dark:to-blue-700 border border-blue-200 dark:border-blue-500 shadow-sm">
+            <div className="flex items-center gap-2">
+              <Wallet className="w-5 h-5 text-blue-700" />
+              <p className="text-gray-600 dark:text-foreground">
+                Wallet Balance
+              </p>
+            </div>
+            <h2 className="text-2xl font-bold text-blue-700 dark:text-white mt-2">
+              ৳{user?.wallet?.balance || 0}
+            </h2>
+          </Card>
+          <Card className="p-5 rounded-xl bg-gradient-to-br from-green-50 to-green-100 dark:from-green-400 dark:to-green-700 border border-green-200 dark:border-green-500 shadow-sm">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-green-700" />
+              <p className="text-gray-600 dark:text-foreground">
+                Total Deposits
+              </p>
+            </div>
+            <h2 className="text-2xl font-bold text-green-700 dark:text-white mt-2">
+              ৳{userStats?.totalDeposits || 0}
+            </h2>
+          </Card>
+          <Card className="p-5 rounded-xl bg-gradient-to-br from-red-50 to-red-100 dark:from-red-400 dark:to-red-700 border border-red-200 dark:border-red-500 shadow-sm">
+            <div className="flex items-center gap-2">
+              <Activity className="w-5 h-5 text-red-700" />
+              <p className="text-gray-600 dark:text-foreground">
+                Total Transactions
+              </p>
+            </div>
+            <h2 className="text-2xl font-bold text-red-700 dark:text-white mt-2">
+              {userStats?.totalTransactions || 0}
+            </h2>
+          </Card>
+        </div>
+        <Card className="shadow-md rounded-2xl">
+          <CardHeader className="flex flex-row justify-between items-center">
+            <CardTitle className="text-xl">Personal Information</CardTitle>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button size="sm" className="flex items-center gap-2">
+                  <Pencil className="w-4 h-4" /> Edit
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Edit Profile</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="mt-1"
+                    />
+                  </div>
+                  <Button className="w-full mt-3">Save Changes</Button>
                 </div>
-              </div>
-            </Card>
-            <Card className="p-4 border border-gray-900 rounded-xl bg-gradient-to-tr from-slate-900 to-emerald-900 shadow-sm">
+              </DialogContent>
+            </Dialog>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-6 mt-3">
               <div className="flex items-center gap-3">
-                <User className="w-8 h-8 text-green-500" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Transactions</p>
-                  <h3 className="text-xl font-bold text-white">
-                    {transactions?.length || 0}
-                  </h3>
-                </div>
+                <User className="w-5 h-5 text-gray-500 dark:text-foreground" />
+                <p className="text-gray-800 dark:text-gray-400 font-medium">
+                  {user?.name || "Not Available"}
+                </p>
               </div>
-            </Card>
-          </div>
-          <div className="flex justify-center mt-6">
-            <Button
-              onClick={handleLogout}
-              variant="destructive"
-              className="flex items-center gap-2 rounded-full px-6 py-2 shadow-md hover:scale-105 transition"
-            >
-              <LogOut className="w-5 h-5" />
-              Logout
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+              <div className="flex items-center gap-3">
+                <ShieldUser className="w-5 h-5 text-gray-500 dark:text-foreground" />
+                <p className="text-gray-800 dark:text-gray-400 font-medium">
+                  {user?.role}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-gray-500 dark:text-foreground" />
+                <p className="text-gray-800 dark:text-gray-400 font-medium">
+                  {user?.phoneNumber}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Calendar className="w-5 h-5 text-gray-500 dark:text-foreground" />
+                <p className="text-gray-800 dark:text-gray-400 font-medium">
+                  Joined on{" "}
+                  {new Date(user?.createdAt || Date.now()).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
-};
-
-export default Profile;
+}

@@ -1,7 +1,9 @@
 import { Role } from "@/consts/auth.const";
+import type {
+  TransactionStatus,
+  TransactionType,
+} from "@/consts/transaction.type";
 import type { ComponentType } from "react";
-
-export type TRole = keyof typeof Role;
 
 export interface ISidebarItem {
   title: string;
@@ -27,6 +29,8 @@ export interface IResponse<T> {
   meta?: IMeta;
 }
 
+export type TRole = keyof typeof Role;
+
 export interface IUserInfoResponse {
   _id: string;
   name: string;
@@ -44,4 +48,20 @@ export interface IWalletResponse {
   user: string;
   isBlocked: boolean;
   balance: number;
+}
+
+export type TTransactionType = keyof typeof TransactionType;
+export type TTransactionStatus = keyof typeof TransactionStatus;
+
+export interface ITransactionResponse {
+  _id?: string;
+  sender: string;
+  receiver: string;
+  type: TTransactionType;
+  amount: number;
+  fee: number;
+  commission: number;
+  through?: string;
+  status: TTransactionStatus;
+  createdAt: Date;
 }

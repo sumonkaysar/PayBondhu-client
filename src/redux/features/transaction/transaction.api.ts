@@ -1,4 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
+import type { IResponse, ITransactionResponse } from "@/types";
 
 export const transactionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -56,10 +57,14 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       providesTags: ["TRANSACTION"],
     }),
-    getMyTransactions: builder.query({
-      query: () => ({
+    getMyTransactions: builder.query<
+      IResponse<ITransactionResponse[]>,
+      Record<string, string | number>
+    >({
+      query: (params) => ({
         url: "/transactions/me",
         method: "GET",
+        params,
       }),
       providesTags: ["TRANSACTION"],
     }),

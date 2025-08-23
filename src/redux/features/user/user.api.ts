@@ -40,6 +40,13 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["ALL_USER"],
     }),
+    getUserStats: builder.query({
+      query: () => ({
+        url: "/users/stats",
+        method: "GET",
+      }),
+      // providesTags: ["ALL_USER"],
+    }),
   }),
 });
 
@@ -49,4 +56,5 @@ export const {
   useUpdateUserStatusMutation,
   useUserInfoQuery,
   useGetAllUsersQuery,
+  useGetUserStatsQuery,
 } = userApi;
