@@ -4,9 +4,10 @@ import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
 import Register from "@/pages/Register";
+import { agentSidebarItems } from "@/routes/agent.route";
 import { userSidebarItems } from "@/routes/user.route";
 import { generateRoutes } from "@/utils/generateRoutes";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 
 const router = createBrowserRouter([
   {
@@ -33,9 +34,20 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Home,
+        element: <Navigate to="wallet" />,
       },
       ...generateRoutes(userSidebarItems),
+    ],
+  },
+  {
+    path: "/agent",
+    Component: DashboardLayout,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="wallet" />,
+      },
+      ...generateRoutes(agentSidebarItems),
     ],
   },
   {

@@ -29,6 +29,14 @@ export interface IResponse<T> {
   meta?: IMeta;
 }
 
+export interface IErrorResponse {
+  data: {
+    statusCode: number;
+    success: boolean;
+    message: string;
+  };
+}
+
 export type TRole = keyof typeof Role;
 
 export interface IUserInfoResponse {

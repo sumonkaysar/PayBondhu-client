@@ -1,19 +1,19 @@
 import SendOrCashInOrCashOut from "@/components/modules/Dashboard/Transaction/SendOrCashInOrCashOut";
 import { TransactionType } from "@/consts/transaction.type";
-import { useCashInMutation } from "@/redux/features/transaction/transaction.api";
+import { useCashOutMutation } from "@/redux/features/transaction/transaction.api";
 import type { IErrorResponse, TTransactionType } from "@/types";
-import { cashInZodSchema } from "@/validations/transaction.validation";
+import { cashOutZodSchema } from "@/validations/transaction.validation";
 import { toast } from "sonner";
 import type z from "zod";
 
-const CashIn = () => {
-  const [cashIn, { isLoading }] = useCashInMutation();
+const CashOut = () => {
+  const [cashOut, { isLoading }] = useCashOutMutation();
 
-  const handleCashIn = async (data: z.infer<typeof cashInZodSchema>) => {
+  const handleCashOut = async (data: z.infer<typeof cashOutZodSchema>) => {
     const toastId = toast.error("Processing...");
 
     try {
-      const res = await cashIn(data).unwrap();
+      const res = await cashOut(data).unwrap();
       toast.success(res.message);
     } catch (err: unknown) {
       const error = err as IErrorResponse;
@@ -23,12 +23,12 @@ const CashIn = () => {
 
   return (
     <SendOrCashInOrCashOut
-      onSubmit={handleCashIn}
+      onSubmit={handleCashOut}
       isLoading={isLoading}
-      type={TransactionType.CASH_IN as TTransactionType}
-      zodSchema={cashInZodSchema}
+      type={TransactionType.CASH_OUT as TTransactionType}
+      zodSchema={cashOutZodSchema}
     />
   );
 };
 
-export default CashIn;
+export default CashOut;

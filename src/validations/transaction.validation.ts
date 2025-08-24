@@ -36,6 +36,8 @@ export const addOrWithdrawMoneyZodSchema = z.object({
   amount: getAmountZodSchema(),
 });
 
+export const transactionZodSchema = getTransactionZodSchema();
+
 export const sendMoneyZodSchema = getTransactionZodSchema();
 
 export const cashInZodSchema = getTransactionZodSchema();

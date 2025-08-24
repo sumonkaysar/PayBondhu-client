@@ -1,7 +1,7 @@
+import AddMoney from "@/pages/Dashboard/AddMoney";
 import CashIn from "@/pages/Dashboard/Agent/CashIn";
 import MyTransactions from "@/pages/Dashboard/MyTransactions";
 import Profile from "@/pages/Dashboard/Profile";
-import AddMoney from "@/pages/Dashboard/User/AddMoney";
 import Wallet from "@/pages/Dashboard/Wallet";
 
 export const agentSidebarItems = [
