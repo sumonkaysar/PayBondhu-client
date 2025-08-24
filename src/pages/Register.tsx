@@ -10,7 +10,7 @@ const Register = () => {
         <img
           src={registerBg}
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-50 "
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-50"
         />
       </div>
       <div className="flex flex-col gap-4 p-6 md:p-10">

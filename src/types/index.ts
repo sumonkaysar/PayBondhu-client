@@ -9,7 +9,7 @@ export interface ISidebarItem {
   }[];
 }
 
-interface IMeta {
+export interface IMeta {
   page: number;
   limit: number;
   totalPage: number;

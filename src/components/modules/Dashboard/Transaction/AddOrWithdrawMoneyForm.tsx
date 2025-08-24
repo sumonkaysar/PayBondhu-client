@@ -20,7 +20,7 @@ import {
 import { addOrWithdrawMoneyZodSchema } from "@/validations/transaction.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Loader2, Wallet } from "lucide-react";
+import { Banknote, Loader2, Wallet } from "lucide-react";
 import { useForm } from "react-hook-form";
 import type z from "zod";
 
@@ -51,8 +51,17 @@ const AddOrWithdrawMoneyForm = ({ onSubmit, isLoading, type }: IProps) => {
       <Card className="shadow-xl border border-gray-200 dark:border-gray-700 rounded-2xl bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 dark:from-rose-950 dark:via-violet-950 dark:to-indigo-950 text-gray-700 dark:text-white">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-extrabold flex justify-center items-center gap-2">
-            <Wallet className="h-8 w-8" />
-            {type === "addMoney" ? "Add Money" : "Withdraw"}
+            {type === "addMoney" ? (
+              <>
+                <Banknote className="h-8 w-8" />
+                Add Money
+              </>
+            ) : (
+              <>
+                <Wallet className="h-8 w-8" />
+                Withdraw
+              </>
+            )}
           </CardTitle>
         </CardHeader>
         <CardContent>

@@ -22,6 +22,7 @@ import {
   TransactionTabs,
   TransactionType,
 } from "@/consts/transaction.const";
+import { Role } from "@/consts/user.const";
 import type {
   ITransaction,
   ITransactionsQueryParams,
@@ -35,7 +36,8 @@ import { motion } from "framer-motion";
 import {
   ArrowDownAZ,
   ArrowUpAZ,
-  Download,
+  Banknote,
+  Coins,
   HandCoins,
   Send,
   Wallet,
@@ -57,19 +59,17 @@ const getIcon = (type: TTransactionType) => {
     case TransactionType.SEND_MONEY:
       return <Send className="h-5 w-5 text-blue-600 dark:text-blue-500" />;
     case TransactionType.CASH_IN:
-      return <Wallet className="h-5 w-5 text-green-600 dark:text-green-500" />;
-    case TransactionType.CASH_OUT:
       return (
-        <HandCoins className="h-5 w-5 text-orange-600 dark:text-orange-500" />
+        <HandCoins className="h-5 w-5 text-green-600 dark:text-green-500" />
       );
+    case TransactionType.CASH_OUT:
+      return <Coins className="h-5 w-5 text-orange-600 dark:text-orange-500" />;
     case TransactionType.ADD_MONEY:
       return (
-        <Download className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+        <Banknote className="h-5 w-5 text-purple-600 dark:text-purple-500" />
       );
     case TransactionType.WITHDRAW:
-      return (
-        <Download className="h-5 w-5 text-purple-600 dark:text-purple-500" />
-      );
+      return <Wallet className="h-5 w-5 text-lime-600 dark:text-lime-500" />;
     default:
       return <Send className="h-5 w-5" />;
   }
@@ -120,9 +120,9 @@ const TransactionTable = ({ transactions, setQueryParams, user }: IProps) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-5xl mx-auto w-11/12 py-8"
+      className="max-w-5xl mx-auto w-11/12 pt-8"
     >
-      <Card className="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 shadow-xl rounded-2xl text-white">
+      <Card className="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 shadow-xl rounded-2xl text-white min-h-[calc(100vh_-230px)]">
         <CardHeader className="flex items-center justify-between">
           <CardTitle className="text-3xl font-extrabold text-gray-800 dark:text-gray-200">
             My Transactions
@@ -179,7 +179,9 @@ const TransactionTable = ({ transactions, setQueryParams, user }: IProps) => {
                   <TableHead className="font-bold">To</TableHead>
                   <TableHead className="font-bold">Amount</TableHead>
                   <TableHead className="font-bold">Fee</TableHead>
-                  <TableHead className="font-bold">Commission</TableHead>
+                  {user.role !== Role.USER && (
+                    <TableHead className="font-bold">Commission</TableHead>
+                  )}
                   <TableHead className="font-bold">Date</TableHead>
                   <TableHead className="font-bold">Status</TableHead>
                 </TableRow>
@@ -202,17 +204,17 @@ const TransactionTable = ({ transactions, setQueryParams, user }: IProps) => {
                         ? tx.through
                         : tx.receiver.phoneNumber}
                     </TableCell>
-                    <TableCell className="text-gray-800 dark:text-gray-300">
-                      <p className="font-bold">
-                        ৳ {tx.amount.toLocaleString()}
-                      </p>
+                    <TableCell className="text-gray-800 dark:text-gray-300 font-bold">
+                      ৳ {tx.amount.toLocaleString()}
                     </TableCell>
                     <TableCell className="text-gray-800 dark:text-gray-300">
-                      fee
+                      ৳ {tx.fee}
                     </TableCell>
-                    <TableCell className="text-gray-800 dark:text-gray-300">
-                      Commission
-                    </TableCell>
+                    {user.role !== Role.USER && (
+                      <TableCell className="text-gray-800 dark:text-gray-300 pl-5">
+                        ৳ {tx.commission}
+                      </TableCell>
+                    )}
                     <TableCell className="text-gray-800 dark:text-gray-300">
                       {dayjs(tx.createdAt).format("Do MMM YYYY")}
                     </TableCell>
