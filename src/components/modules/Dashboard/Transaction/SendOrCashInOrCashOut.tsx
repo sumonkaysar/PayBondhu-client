@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { TransactionType } from "@/consts/transaction.type";
-import type { TTransactionType } from "@/types";
+import type { TTransactionType } from "@/types/transaction.type";
 import type { transactionZodSchema } from "@/validations/transaction.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";

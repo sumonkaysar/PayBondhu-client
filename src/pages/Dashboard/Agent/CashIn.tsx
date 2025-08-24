@@ -1,7 +1,8 @@
 import SendOrCashInOrCashOut from "@/components/modules/Dashboard/Transaction/SendOrCashInOrCashOut";
 import { TransactionType } from "@/consts/transaction.type";
 import { useCashInMutation } from "@/redux/features/transaction/transaction.api";
-import type { IErrorResponse, TTransactionType } from "@/types";
+import type { IErrorResponse } from "@/types";
+import type { TTransactionType } from "@/types/transaction.type";
 import { cashInZodSchema } from "@/validations/transaction.validation";
 import { toast } from "sonner";
 import type z from "zod";

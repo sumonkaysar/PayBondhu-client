@@ -13,7 +13,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { useUserInfoQuery } from "@/redux/features/user/user.api";
-import type { TRole } from "@/types";
+import type { TRole } from "@/types/user.type";
 import { getSidebarItems } from "@/utils/getSidebarItems";
 import * as React from "react";
 import { Link, useLocation } from "react-router";

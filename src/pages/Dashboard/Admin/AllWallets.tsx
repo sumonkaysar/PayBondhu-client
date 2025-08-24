@@ -27,7 +27,7 @@ const AllWallets = () => {
   const [updateWalletStatus] = useUpdateWalletBlockStatusMutation();
 
   const handleBlockToggle = async (walletId: string, isBlocked: boolean) => {
-    await updateWalletStatus({ walletId, data: { isBlocked: !isBlocked } });
+    await updateWalletStatus({ walletId, isBlocked: !isBlocked });
   };
 
   if (allWalletsLoading) {

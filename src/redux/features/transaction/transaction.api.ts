@@ -1,9 +1,21 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IResponse, ITransactionResponse } from "@/types";
+import type { IResponse } from "@/types";
+import type {
+  IReverseTransactionArg,
+  ITransaction,
+} from "@/types/transaction.type";
+import {
+  addOrWithdrawMoneyZodSchema,
+  transactionZodSchema,
+} from "@/validations/transaction.validation";
+import type z from "zod";
 
 export const transactionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    addMoney: builder.mutation({
+    addMoney: builder.mutation<
+      IResponse<ITransaction>,
+      z.infer<typeof addOrWithdrawMoneyZodSchema>
+    >({
       query: (data) => ({
         url: "/transactions/add-money",
         method: "POST",
@@ -11,7 +23,10 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["TRANSACTION"],
     }),
-    withdrawMoney: builder.mutation({
+    withdrawMoney: builder.mutation<
+      IResponse<ITransaction>,
+      z.infer<typeof addOrWithdrawMoneyZodSchema>
+    >({
       query: (data) => ({
         url: "/transactions/withdraw",
         method: "POST",
@@ -19,7 +34,10 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["TRANSACTION"],
     }),
-    sendMoney: builder.mutation({
+    sendMoney: builder.mutation<
+      IResponse<ITransaction>,
+      z.infer<typeof transactionZodSchema>
+    >({
       query: (data) => ({
         url: "/transactions/send-money",
         method: "POST",
@@ -27,7 +45,10 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["TRANSACTION"],
     }),
-    cashIn: builder.mutation({
+    cashIn: builder.mutation<
+      IResponse<ITransaction>,
+      z.infer<typeof transactionZodSchema>
+    >({
       query: (data) => ({
         url: "/transactions/cash-in",
         method: "POST",
@@ -35,7 +56,10 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["TRANSACTION"],
     }),
-    cashOut: builder.mutation({
+    cashOut: builder.mutation<
+      IResponse<ITransaction>,
+      z.infer<typeof transactionZodSchema>
+    >({
       query: (data) => ({
         url: "/transactions/cash-out",
         method: "POST",
@@ -43,14 +67,20 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["TRANSACTION"],
     }),
-    reverseTransaction: builder.mutation({
+    reverseTransaction: builder.mutation<
+      IResponse<ITransaction>,
+      IReverseTransactionArg
+    >({
       query: (transactionId) => ({
         url: `/transactions/${transactionId}/reverse`,
         method: "GET",
       }),
       invalidatesTags: ["TRANSACTION"],
     }),
-    getAllTransactions: builder.query({
+    getAllTransactions: builder.query<
+      IResponse<ITransaction[]>,
+      Record<string, string | number>
+    >({
       query: () => ({
         url: "/transactions/all-transactions",
         method: "GET",
@@ -58,7 +88,7 @@ export const transactionApi = baseApi.injectEndpoints({
       providesTags: ["TRANSACTION"],
     }),
     getMyTransactions: builder.query<
-      IResponse<ITransactionResponse[]>,
+      IResponse<ITransaction[]>,
       Record<string, string | number>
     >({
       query: (params) => ({

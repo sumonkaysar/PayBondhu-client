@@ -1,7 +1,7 @@
-import { Role } from "@/consts/auth.const";
+import { Role } from "@/consts/user.const";
 import { agentSidebarItems } from "@/routes/agent.route";
 import { userSidebarItems } from "@/routes/user.route";
-import type { TRole } from "@/types";
+import type { TRole } from "@/types/user.type";
 
 export const getSidebarItems = (role: TRole) => {
   switch (role) {

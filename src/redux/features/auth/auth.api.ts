@@ -1,7 +1,10 @@
 import { baseApi } from "@/redux/baseApi";
-import type { ILoginResponse } from "@/redux/features/auth/auth.type";
 import type { IResponse } from "@/types";
-import { loginSchema } from "@/validations/auth.validation";
+import type { ILoginResponse, INewAccessToken } from "@/types/auth.type";
+import {
+  changePasswordSchema,
+  loginSchema,
+} from "@/validations/auth.validation";
 import type z from "zod";
 
 export const authApi = baseApi.injectEndpoints({
@@ -16,21 +19,24 @@ export const authApi = baseApi.injectEndpoints({
         data,
       }),
     }),
-    logout: builder.mutation<null, null>({
+    logout: builder.mutation<IResponse<null>, null>({
       query: () => ({
         url: "/auth/logout",
         method: "GET",
       }),
       invalidatesTags: ["USER"],
     }),
-    changePassword: builder.mutation({
+    changePassword: builder.mutation<
+      IResponse<null>,
+      z.infer<typeof changePasswordSchema>
+    >({
       query: (data) => ({
         url: "/auth/reset-password",
         method: "PATCH",
         data,
       }),
     }),
-    getNewAccessToken: builder.mutation({
+    getNewAccessToken: builder.mutation<IResponse<INewAccessToken>, null>({
       query: () => ({
         url: "/auth/refresh-token",
         method: "GET",

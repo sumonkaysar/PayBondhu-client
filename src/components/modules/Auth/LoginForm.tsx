@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import PasswordInput from "@/components/ui/passwordInput";
-import { Role } from "@/consts/auth.const";
+import { Role } from "@/consts/user.const";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { loginSchema } from "@/validations/auth.validation";

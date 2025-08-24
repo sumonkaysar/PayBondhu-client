@@ -1,19 +1,19 @@
 import AllUsers from "@/pages/Dashboard/Admin/AllUsers";
 import Analytics from "@/pages/Dashboard/Admin/Analytics";
 
-export const agentSidebarItems = [
+export const adminSidebarItems = [
   {
     title: "Dashboard",
     items: [
       {
-        title: "Wallet",
+        title: "Analytics",
         url: "/admin/analytics",
         component: Analytics,
       },
     ],
   },
   {
-    title: "Transaction",
+    title: "Users",
     items: [
       {
         title: "All Users",

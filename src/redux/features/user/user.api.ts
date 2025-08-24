@@ -1,16 +1,32 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IResponse, IUserInfoResponse } from "@/types";
+import type { IResponse } from "@/types";
+import type {
+  IUpdateUserStatusArg,
+  IUser,
+  IUserStats,
+} from "@/types/user.type";
+import type {
+  registerSchema,
+  updateUserNameSchema,
+} from "@/validations/user.validation";
+import type z from "zod";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    userRegister: builder.mutation({
+    userRegister: builder.mutation<
+      IResponse<IUser>,
+      z.infer<typeof registerSchema>
+    >({
       query: (data) => ({
         url: "/users/registers",
         method: "POST",
         data,
       }),
     }),
-    updateUserInfo: builder.mutation({
+    updateUserInfo: builder.mutation<
+      IResponse<IUser>,
+      z.infer<typeof updateUserNameSchema>
+    >({
       query: (data) => ({
         url: "/users",
         method: "PATCH",
@@ -18,34 +34,34 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
-    updateUserStatus: builder.mutation({
-      query: ({ userId, data }) => ({
+    updateUserStatus: builder.mutation<IResponse<IUser>, IUpdateUserStatusArg>({
+      query: ({ userId, ...data }) => ({
         url: `/users/${userId}/status`,
         method: "PATCH",
         data,
       }),
       invalidatesTags: ["ALL_USER"],
     }),
-    userInfo: builder.query<IResponse<IUserInfoResponse>, null>({
+    userInfo: builder.query<IResponse<IUser>, null>({
       query: () => ({
         url: "/users/me",
         method: "GET",
       }),
       providesTags: ["USER"],
     }),
-    getAllUsers: builder.query({
+    getAllUsers: builder.query<IResponse<IUser[]>, null>({
       query: () => ({
         url: "/users/all-users",
         method: "GET",
       }),
       providesTags: ["ALL_USER"],
     }),
-    getUserStats: builder.query({
+    getUserStats: builder.query<IResponse<IUserStats>, null>({
       query: () => ({
         url: "/users/stats",
         method: "GET",
       }),
-      // providesTags: ["ALL_USER"],
+      providesTags: ["TRANSACTION", "USER"],
     }),
   }),
 });

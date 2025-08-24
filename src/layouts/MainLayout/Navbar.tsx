@@ -12,7 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Role } from "@/consts/auth.const";
+import { Role } from "@/consts/user.const";
 import { useUserInfoQuery } from "@/redux/features/user/user.api";
 import React from "react";
 import { Link } from "react-router";

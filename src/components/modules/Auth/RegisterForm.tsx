@@ -17,10 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Role } from "@/consts/auth.const";
+import { Role } from "@/consts/user.const";
 import { cn } from "@/lib/utils";
 import { useUserRegisterMutation } from "@/redux/features/user/user.api";
-import { registerSchema } from "@/validations/auth.validation";
+import type { TRole } from "@/types/user.type";
+import { registerSchema } from "@/validations/user.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
