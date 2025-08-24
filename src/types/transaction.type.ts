@@ -1,7 +1,7 @@
 import type {
   TransactionStatus,
   TransactionType,
-} from "@/consts/transaction.type";
+} from "@/consts/transaction.const";
 import type { IUser } from "@/types/user.type";
 
 export type TTransactionType = keyof typeof TransactionType;
@@ -27,4 +27,13 @@ export interface ITransaction {
 
 export interface IReverseTransactionArg {
   transactionId: string;
+}
+
+export interface ITransactionsQueryParams {
+  page?: number;
+  limit?: number;
+  type?: string;
+  status?: string;
+  search?: string;
+  sort?: string;
 }
