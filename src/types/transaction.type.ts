@@ -34,6 +34,6 @@ export interface ITransactionsQueryParams {
   limit?: number;
   type?: string;
   status?: string;
-  search?: string;
+  searchTerm?: string;
   sort?: string;
 }

@@ -19,7 +19,11 @@ const MyTransactions = () => {
     limit: 10,
   });
 
-  const { data: userData, isLoading: isUserLoading } = useUserInfoQuery(null);
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useUserInfoQuery(null);
   const user = userData?.data as IUser;
 
   const {
@@ -35,6 +39,10 @@ const MyTransactions = () => {
   }, [queryParams, refetch]);
 
   if (isUserLoading || isTransactionLoading) {
+    return <Loader />;
+  }
+
+  if (isUserError) {
     return <Loader />;
   }
 
@@ -54,9 +62,9 @@ const MyTransactions = () => {
         <Card className="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 shadow-xl rounded-2xl text-white py-2">
           <CardContent>
             <PaginationCard
-              currentPage={transactionMeta.page}
-              totalPages={transactionMeta.totalPage}
-              paginationItemsToDisplay={transactionMeta.limit}
+              currentPage={transactionMeta?.page}
+              totalPages={transactionMeta?.totalPage}
+              paginationItemsToDisplay={transactionMeta?.limit}
               setQueryParams={setQueryParams}
             />
           </CardContent>

@@ -34,8 +34,7 @@ import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import { motion } from "framer-motion";
 import {
-  ArrowDownAZ,
-  ArrowUpAZ,
+  ArrowUpDown,
   Banknote,
   Coins,
   HandCoins,
@@ -101,7 +100,6 @@ const getStatusBadge = (status: TTransactionStatus) => {
 };
 
 const TransactionTable = ({ transactions, setQueryParams, user }: IProps) => {
-  const [sortAsc, setSortAsc] = useState(false);
   const [search, setSearch] = useState("");
 
   const handleTabChange = (val: string) => {
@@ -113,6 +111,15 @@ const TransactionTable = ({ transactions, setQueryParams, user }: IProps) => {
         return restQuery;
       });
     }
+  };
+
+  const handleSorting = (val: string) => {
+    setQueryParams((prevQuery) => ({ ...prevQuery, sort: val }));
+  };
+
+  const handleSearching = (val: string) => {
+    setSearch(val);
+    setQueryParams((prevQuery) => ({ ...prevQuery, searchTerm: val }));
   };
 
   return (
@@ -129,31 +136,54 @@ const TransactionTable = ({ transactions, setQueryParams, user }: IProps) => {
           </CardTitle>
           <div className="flex gap-3">
             <Input
-              placeholder="Search by ID..."
+              placeholder="Search..."
               className="w-48 text-black dark:text-white bg-white/80 dark:bg-white/10"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => handleSearching(e.target.value)}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="secondary"
-                  className="bg-white/20 hover:bg-white/30"
+                  className="bg-white/20 hover:bg-white/30 cursor-pointer"
+                  title="Sort"
                 >
-                  {sortAsc ? (
-                    <ArrowUpAZ className="h-5 w-5" />
-                  ) : (
-                    <ArrowDownAZ className="h-5 w-5" />
-                  )}
+                  <ArrowUpDown className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => setSortAsc(true)}>
+                <DropdownMenuItem onClick={() => handleSorting("createdAt")}>
+                  Sort by Date ↑
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSorting("-createdAt")}>
+                  Sort by Date ↓
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSorting("amount")}>
                   Sort by Amount ↑
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortAsc(false)}>
+                <DropdownMenuItem onClick={() => handleSorting("-amount")}>
                   Sort by Amount ↓
                 </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSorting("fee")}>
+                  Sort by Fee ↑
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSorting("-fee")}>
+                  Sort by Fee ↓
+                </DropdownMenuItem>
+                {user?.role !== Role.USER && (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() => handleSorting("commission")}
+                    >
+                      Sort by Commission ↑
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleSorting("-commission")}
+                    >
+                      Sort by Commission ↓
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

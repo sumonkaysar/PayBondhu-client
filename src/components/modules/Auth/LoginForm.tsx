@@ -41,22 +41,21 @@ const LoginForm = ({
       const res = await login(data).unwrap();
 
       if (res.success) {
-        console.log(res.data);
         toast.success(res.message, { id: toastId });
 
         let navigateTo = "";
 
         switch (res.data.user.role) {
           case Role.USER:
-            navigateTo = "/user";
+            navigateTo = "/user/wallet";
             break;
 
           case Role.ADMIN:
-            navigateTo = "/admin";
+            navigateTo = "/admin/analytics";
             break;
 
           case Role.AGENT:
-            navigateTo = "/agent";
+            navigateTo = "/agent/wallet";
             break;
 
           default:

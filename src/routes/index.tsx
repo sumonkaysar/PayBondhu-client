@@ -1,4 +1,5 @@
 import App from "@/App";
+import { Role } from "@/consts/user.const";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
@@ -7,7 +8,9 @@ import Register from "@/pages/Register";
 import { adminSidebarItems } from "@/routes/admin.route";
 import { agentSidebarItems } from "@/routes/agent.route";
 import { userSidebarItems } from "@/routes/user.route";
+import type { TRole } from "@/types/user.type";
 import { generateRoutes } from "@/utils/generateRoutes";
+import { withAuth } from "@/utils/withAuth";
 import { createBrowserRouter, Navigate } from "react-router";
 
 const router = createBrowserRouter([
@@ -31,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/user",
-    Component: DashboardLayout,
+    Component: withAuth(DashboardLayout, Role.USER as TRole),
     children: [
       {
         index: true,
@@ -42,7 +45,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/agent",
-    Component: DashboardLayout,
+    Component: withAuth(DashboardLayout, Role.AGENT as TRole),
     children: [
       {
         index: true,
@@ -53,7 +56,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    Component: DashboardLayout,
+    Component: withAuth(DashboardLayout, Role.ADMIN as TRole),
     children: [
       {
         index: true,
