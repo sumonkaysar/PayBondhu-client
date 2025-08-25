@@ -14,7 +14,7 @@ import {
 import { motion } from "framer-motion";
 import { HelpCircle } from "lucide-react";
 
-const FAQPage = () => {
+const FAQ = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -68,4 +68,4 @@ const FAQPage = () => {
   );
 };
 
-export default FAQPage;
+export default FAQ;

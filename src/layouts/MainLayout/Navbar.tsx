@@ -22,6 +22,10 @@ const navigationLinks = [
   { href: "/admin", label: "Dashboard", role: Role.ADMIN },
   { href: "/agent", label: "Dashboard", role: Role.AGENT },
   { href: "/user", label: "Dashboard", role: Role.USER },
+  { href: "/features", label: "Features", role: "PUBLIC" },
+  { href: "/about", label: "About", role: "PUBLIC" },
+  { href: "/contact", label: "Contact", role: "PUBLIC" },
+  { href: "/faq", label: "FAQ", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
 ];
 
