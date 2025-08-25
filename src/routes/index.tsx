@@ -1,6 +1,8 @@
 import App from "@/App";
 import { Role } from "@/consts/user.const";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
+import About from "@/pages/About";
+import Features from "@/pages/Features";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "about",
+        Component: About,
+      },
+      {
+        path: "features",
+        Component: Features,
       },
     ],
   },
