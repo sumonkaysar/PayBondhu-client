@@ -2,11 +2,15 @@ import App from "@/App";
 import { Role } from "@/consts/user.const";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import About from "@/pages/About";
+import FAQPage from "@/pages/FAQ";
 import Features from "@/pages/Features";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import RefundPolicy from "@/pages/RefundPolicy";
 import Register from "@/pages/Register";
+import TermsAndConditions from "@/pages/TermsAndConditions";
 import { adminSidebarItems } from "@/routes/admin.route";
 import { agentSidebarItems } from "@/routes/agent.route";
 import { userSidebarItems } from "@/routes/user.route";
@@ -31,6 +35,22 @@ const router = createBrowserRouter([
       {
         path: "features",
         Component: Features,
+      },
+      {
+        path: "faq",
+        Component: FAQPage,
+      },
+      {
+        path: "privacy-policy",
+        Component: PrivacyPolicy,
+      },
+      {
+        path: "refund-policy",
+        Component: RefundPolicy,
+      },
+      {
+        path: "conditions",
+        Component: TermsAndConditions,
       },
     ],
   },
