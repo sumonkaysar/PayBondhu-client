@@ -5,7 +5,8 @@ import type {
   IUser,
   IUserStats,
 } from "@/types/user.type";
-import type {
+import { contactSchema } from "@/validations/contact.validation";
+import {
   registerSchema,
   updateUserNameSchema,
 } from "@/validations/user.validation";
@@ -63,6 +64,15 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["TRANSACTION", "USER"],
     }),
+    contactUs: builder.mutation<IResponse<null>, z.infer<typeof contactSchema>>(
+      {
+        query: (data) => ({
+          url: "/users/contact-us",
+          method: "POST",
+          data,
+        }),
+      }
+    ),
   }),
 });
 
@@ -73,4 +83,5 @@ export const {
   useUserInfoQuery,
   useGetAllUsersQuery,
   useGetUserStatsQuery,
+  useContactUsMutation,
 } = userApi;

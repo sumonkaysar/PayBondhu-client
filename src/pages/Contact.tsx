@@ -6,132 +6,179 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useContactUsMutation } from "@/redux/features/user/user.api";
+import { contactSchema } from "@/validations/contact.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { CheckCircle2, Mail, MessageSquare } from "lucide-react";
-import { useState } from "react";
+import { Mail, MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.email("Enter a valid email"),
-  subject: z.string().min(3, "Subject must be at least 3 characters"),
-  message: z.string().min(10, "Tell us a bit more (min 10 chars)"),
-});
-
-type ContactValues = z.infer<typeof contactSchema>;
-
 const Contact = () => {
-  const [submitted, setSubmitted] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<ContactValues>({
+  const [contactUs, { isLoading }] = useContactUsMutation();
+  const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    },
   });
 
-  async function onSubmit(values: ContactValues) {
-    await new Promise((r) => setTimeout(r, 900));
-    console.log("Contact submission", values);
-    setSubmitted(true);
-    reset();
-    setTimeout(() => setSubmitted(false), 3000);
-  }
+  const onSubmit = async (data: z.infer<typeof contactSchema>) => {
+    const toastId = toast.loading("Sending...");
+    try {
+      const res = await contactUs(data).unwrap();
+      if (res.success) {
+        toast.success(res.message, { id: toastId });
+        form.reset();
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error.data.message, { id: toastId });
+    }
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-3xl mx-auto w-11/12 py-10"
+      className="container mx-auto px-6 py-10"
     >
-      <Card className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-white rounded-2xl shadow-xl">
-        <CardHeader>
-          <CardTitle className="text-4xl font-extrabold flex items-center gap-2">
-            <Mail className="h-7 w-7" /> Contact Us
-          </CardTitle>
-          <CardDescription className="text-white/80">
-            We usually reply within 24 hours.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <Input
-                  placeholder="Your Name"
-                  {...register("name")}
-                  className="bg-white/90 dark:bg-white/10 text-black dark:text-white"
-                />
-                {errors.name && (
-                  <p className="text-sm text-red-200 mt-1">
-                    {errors.name.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Input
-                  placeholder="you@example.com"
-                  type="email"
-                  {...register("email")}
-                  className="bg-white/90 dark:bg-white/10 text-black dark:text-white"
-                />
-                {errors.email && (
-                  <p className="text-sm text-red-200 mt-1">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div>
-              <Input
-                placeholder="Subject"
-                {...register("subject")}
-                className="bg-white/90 dark:bg-white/10 text-black dark:text-white"
-              />
-              {errors.subject && (
-                <p className="text-sm text-red-200 mt-1">
-                  {errors.subject.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <Textarea
-                placeholder="Write your message..."
-                rows={6}
-                {...register("message")}
-                className="bg-white/90 dark:bg-white/10 text-black dark:text-white"
-              />
-              {errors.message && (
-                <p className="text-sm text-red-200 mt-1">
-                  {errors.message.message}
-                </p>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="bg-white/20 hover:bg-white/30 dark:bg-primary dark:hover:bg-primary/90 cursor-pointer"
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-2xl md:text-4xl font-extrabold text-center text-primary">
+          Contact Us
+        </h2>
+        <Card className="bg-gradient-to-br from-green-300 via-emerald-300 to-teal-400 dark:from-gray-900 dark:via-slate-900 dark:to-slate-950 dark:text-white rounded-2xl shadow-xl mt-8 mb-10">
+          <CardHeader>
+            <CardTitle className="text-lg md:text-2xl font-extrabold flex items-center gap-2 text-neutral-700 dark:text-foreground">
+              <Mail className="h-6 md:h-7 w-6 md:w-7" /> Send Message
+            </CardTitle>
+            <CardDescription className="text-neutral-600 dark:text-gray-400">
+              We usually reply within 24 hours.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
               >
-                <MessageSquare className="h-4 w-4 mr-2" />{" "}
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </Button>
-              {submitted && (
-                <span className="inline-flex items-center text-sm text-green-200">
-                  <CheckCircle2 className="h-4 w-4 mr-1" /> Sent! We'll get back
-                  to you.
-                </span>
-              )}
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              className="bg-white/90 dark:bg-white/10 text-black dark:text-white"
+                              placeholder="Your Name"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription className="sr-only">
+                            Enter your name.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              className="bg-white/90 dark:bg-white/10 text-black dark:text-white"
+                              type="email"
+                              placeholder="you@example.com"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription className="sr-only">
+                            Enter your email
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            className="bg-white/90 dark:bg-white/10 text-black dark:text-white"
+                            placeholder="Subject"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription className="sr-only">
+                          Enter subject
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Write your message..."
+                            className="resize-none bg-white/90 dark:bg-white/10 text-black dark:text-white"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription className="sr-only">
+                          Enter your message
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex items-center gap-3">
+                  <Button
+                    type="submit"
+                    // disabled={isSubmitting}
+                    className="text-primary dark:text-white bg-white/90 hover:bg-white/80 dark:bg-primary dark:hover:bg-primary/90 cursor-pointer"
+                  >
+                    <MessageSquare className="h-4 w-4 mr-2" />{" "}
+                    {isLoading ? "Sending..." : "Send Message"}
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
     </motion.div>
   );
 };

@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         Component: RefundPolicy,
       },
       {
-        path: "conditions",
+        path: "terms-conditions",
         Component: TermsAndConditions,
       },
     ],

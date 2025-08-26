@@ -26,7 +26,6 @@ const navigationLinks = [
   { href: "/about", label: "About", role: "PUBLIC" },
   { href: "/contact", label: "Contact", role: "PUBLIC" },
   { href: "/faq", label: "FAQ", role: "PUBLIC" },
-  { href: "/about", label: "About", role: "PUBLIC" },
 ];
 
 const Navbar = () => {

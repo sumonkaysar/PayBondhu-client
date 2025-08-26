@@ -20,50 +20,58 @@ const FAQ = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-3xl mx-auto w-11/12 py-10"
+      className="container mx-auto py-10 px-6"
     >
-      <Card className="bg-gradient-to-br from-blue-600 via-indigo-500 to-purple-600 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-white rounded-2xl shadow-xl">
-        <CardHeader>
-          <CardTitle className="text-4xl font-extrabold flex items-center gap-2">
-            <HelpCircle className="h-7 w-7" /> FAQs
-          </CardTitle>
-          <CardDescription className="text-white/80">
-            Quick answers to common questions.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="q1">
-              <AccordionTrigger>How do I cash in or cash out?</AccordionTrigger>
-              <AccordionContent>
-                Go to the Wallet section and choose <b>Cash In</b> to deposit or{" "}
-                <b>Cash Out</b> to withdraw. Follow on-screen steps.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q2">
-              <AccordionTrigger>Are my transactions secure?</AccordionTrigger>
-              <AccordionContent>
-                Yes. We use bank-grade encryption, device fingerprinting, and
-                fraud monitoring to protect your funds and data.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q3">
-              <AccordionTrigger>What are the fees?</AccordionTrigger>
-              <AccordionContent>
-                Fees vary by transaction type. See the Pricing page for the
-                latest fee schedule and subscription tiers.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q4">
-              <AccordionTrigger>How long do refunds take?</AccordionTrigger>
-              <AccordionContent>
-                Approved refunds are usually processed within 5–10 business
-                days, depending on your payment method.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </CardContent>
-      </Card>
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-2xl md:text-4xl font-extrabold text-center text-primary">
+          FAQs
+        </h2>
+        <Card className="bg-gradient-to-br from-green-300 via-emerald-300 to-teal-400 dark:from-gray-900 dark:via-slate-900 dark:to-slate-950 dark:text-white rounded-2xl shadow-xl mt-8 mb-10 mx-0">
+          <CardHeader>
+            <CardTitle className="text-lg md:text-2xl font-extrabold flex items-center gap-2 text-neutral-700 dark:text-foreground">
+              <HelpCircle className="h-6 md:h-7 w-6 md:w-7" /> Frequently Asked
+              Questions
+            </CardTitle>
+            <CardDescription className="text-neutral-600 dark:text-gray-400">
+              Quick answers to common questions.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="q1">
+                <AccordionTrigger>
+                  How do I cash in or cash out?
+                </AccordionTrigger>
+                <AccordionContent className="text-neutral-700 dark:text-gray-400">
+                  Go to the Wallet section and choose <b>Cash In</b> to deposit
+                  or <b>Cash Out</b> to withdraw. Follow on-screen steps.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="q2">
+                <AccordionTrigger>Are my transactions secure?</AccordionTrigger>
+                <AccordionContent>
+                  Yes. We use bank-grade encryption, device fingerprinting, and
+                  fraud monitoring to protect your funds and data.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="q3">
+                <AccordionTrigger>What are the fees?</AccordionTrigger>
+                <AccordionContent>
+                  Fees vary by transaction type. See the Pricing page for the
+                  latest fee schedule and subscription tiers.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="q4">
+                <AccordionTrigger>How long do refunds take?</AccordionTrigger>
+                <AccordionContent>
+                  Approved refunds are usually processed within 5-10 business
+                  days, depending on your payment method.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </CardContent>
+        </Card>
+      </div>
     </motion.div>
   );
 };
