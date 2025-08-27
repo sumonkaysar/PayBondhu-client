@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Role } from "@/consts/user.const";
 import {
   useGetUserStatsQuery,
+  useUpdateUserInfoMutation,
   useUserInfoQuery,
 } from "@/redux/features/user/user.api";
 import {
@@ -28,8 +29,10 @@ import {
   Wallet,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function ProfilePage() {
+  const [updateInfo] = useUpdateUserInfoMutation();
   const { data: userData, isLoading: isUserLoading } = useUserInfoQuery(null);
   const user = userData?.data;
 
@@ -43,6 +46,18 @@ export default function ProfilePage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = async () => {
+    const toastId = toast.loading("Updating...");
+
+    try {
+      const res = await updateInfo(formData as { name: string }).unwrap();
+      toast.success(res.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      toast.error(err.data?.message, { id: toastId });
+    }
   };
 
   if (isUserLoading || isUserStatsLoading) {
@@ -131,7 +146,9 @@ export default function ProfilePage() {
                       className="mt-1"
                     />
                   </div>
-                  <Button className="w-full mt-3">Save Changes</Button>
+                  <Button onClick={onSubmit} className="w-full mt-3">
+                    Save Changes
+                  </Button>
                 </div>
               </DialogContent>
             </Dialog>
