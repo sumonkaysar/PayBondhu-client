@@ -45,7 +45,7 @@ const DashboardSidebar = ({
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarMenu>
+          <SidebarMenu id="nav-menu">
             {sidebarData.navMain.map((section) => (
               <SidebarMenuItem key={section.title}>
                 <SidebarMenuButton

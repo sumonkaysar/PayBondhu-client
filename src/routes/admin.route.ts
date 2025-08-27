@@ -1,3 +1,4 @@
+import AllTransactions from "@/pages/Dashboard/Admin/AllTransactions";
 import AllUsers from "@/pages/Dashboard/Admin/AllUsers";
 import AllWallets from "@/pages/Dashboard/Admin/AllWallets";
 import Analytics from "@/pages/Dashboard/Admin/Analytics";
@@ -25,6 +26,11 @@ export const adminSidebarItems = [
         title: "All Wallets",
         url: "/admin/all-wallets",
         component: AllWallets,
+      },
+      {
+        title: "All Transactions",
+        url: "/admin/all-transactions",
+        component: AllTransactions,
       },
     ],
   },

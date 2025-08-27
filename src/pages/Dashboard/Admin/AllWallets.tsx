@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Loader from "@/components/shared/Loader";
 import PaginationCard from "@/components/shared/PaginationCard";
 import { Badge } from "@/components/ui/badge";
@@ -50,12 +51,19 @@ const AllWallets = () => {
   const handleTabChange = (val: string) => {
     if (val !== "all") {
       setQueryParams(
-        (prevQuery) => ({ ...prevQuery, role: val } as IWalletsQueryParams)
+        ({ _id, ...restQuery }) =>
+          ({ ...restQuery, role: val } as IWalletsQueryParams)
       );
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      setQueryParams(({ role, ...restQuery }) => restQuery);
+      setQueryParams(({ _id, role, ...restQuery }) => restQuery);
     }
+  };
+
+  const handleQuery = (newQuery: Record<string, string>) => {
+    setFindID("");
+    setQueryParams(({ _id, ...restQuery }) => {
+      return { ...restQuery, ...newQuery };
+    });
   };
 
   const handleSorting = (val: string) => {
@@ -65,14 +73,6 @@ const AllWallets = () => {
   const handleSearching = (val: string) => {
     setSearch(val);
     handleQuery({ searchTerm: val });
-  };
-
-  const handleQuery = (newQuery: Record<string, string>) => {
-    setFindID("");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    setQueryParams(({ _id, ...restQuery }) => {
-      return { ...restQuery, ...newQuery };
-    });
   };
 
   useEffect(() => {

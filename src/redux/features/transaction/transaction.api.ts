@@ -3,6 +3,7 @@ import type { IResponse } from "@/types";
 import type {
   IReverseTransactionArg,
   ITransaction,
+  ITransactionsQueryParams,
 } from "@/types/transaction.type";
 import {
   addOrWithdrawMoneyZodSchema,
@@ -79,17 +80,18 @@ export const transactionApi = baseApi.injectEndpoints({
     }),
     getAllTransactions: builder.query<
       IResponse<ITransaction[]>,
-      Record<string, string | number>
+      ITransactionsQueryParams
     >({
-      query: () => ({
+      query: (params) => ({
         url: "/transactions/all-transactions",
         method: "GET",
+        params,
       }),
       providesTags: ["TRANSACTION"],
     }),
     getMyTransactions: builder.query<
       IResponse<ITransaction[]>,
-      Record<string, string | number>
+      ITransactionsQueryParams
     >({
       query: (params) => ({
         url: "/transactions/me",

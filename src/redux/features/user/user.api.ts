@@ -20,7 +20,7 @@ export const userApi = baseApi.injectEndpoints({
       z.infer<typeof registerSchema>
     >({
       query: (data) => ({
-        url: "/users/registers",
+        url: "/users/register",
         method: "POST",
         data,
       }),

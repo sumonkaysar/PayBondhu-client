@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Badge } from "@/components/ui/badge";
@@ -107,7 +108,7 @@ export default function Analytics() {
   // TODO: replace MOCK_DATA with API data; derive params from state above
   // const { data, isLoading } = useGetAdminAnalyticsQuery({ from: range.from, to: range.to, granularity })
   const data: AnalyticsResponse = MOCK_DATA;
-  const isLoading = false;
+  // const isLoading = false;
 
   const kpi = data?.kpi;
 
@@ -145,7 +146,10 @@ export default function Analytics() {
       className="mx-auto max-w-7xl w-11/12 py-8"
     >
       {/* Gradient hero */}
-      <div className="rounded-3xl p-[1px] bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+      <div
+        id="dashboard-stats"
+        className="rounded-3xl p-[1px] bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500"
+      >
         <div className="rounded-[calc(1.5rem-1px)] bg-white dark:bg-neutral-900">
           <div className="px-6 py-6 md:px-8 md:py-8 flex flex-col gap-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -324,7 +328,11 @@ export default function Analytics() {
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                     <div className="lg:col-span-3">
-                      <ResponsiveContainer width="100%" height={320}>
+                      <ResponsiveContainer
+                        width="100%"
+                        height={320}
+                        id="charts-section"
+                      >
                         <PieChart>
                           <Pie
                             data={pieData}

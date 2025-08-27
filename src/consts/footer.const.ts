@@ -1,4 +1,4 @@
-import Facebook from "@/assets/icons/facebook";
+import Facebook from "@/assets/icons/Facebook";
 import Github from "@/assets/icons/Github";
 import Instagram from "@/assets/icons/Instagram";
 import LinkedIn from "@/assets/icons/LinkedIn";

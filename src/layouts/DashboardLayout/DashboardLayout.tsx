@@ -1,3 +1,4 @@
+import GuidedTour from "@/components/modules/Dashboard/GuidedTour";
 import { ModeToggle } from "@/components/shared/modeToggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,10 +41,11 @@ const DashboardLayout = () => {
               variant="outline"
               className="p-[17px]"
               style={{ cursor: "pointer" }}
+              id="sidebar-toggle"
             />
             <ModeToggle />
           </div>
-          <Button onClick={handleLogout} variant="destructive">
+          <Button onClick={handleLogout} variant="destructive" id="logout-btn">
             Logout
           </Button>
         </header>
@@ -51,6 +53,7 @@ const DashboardLayout = () => {
           <Outlet />
         </div>
       </SidebarInset>
+      <GuidedTour />
     </SidebarProvider>
   );
 };

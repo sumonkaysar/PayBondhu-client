@@ -30,6 +30,7 @@ export interface IReverseTransactionArg {
 }
 
 export interface ITransactionsQueryParams {
+  _id?: string;
   page?: number;
   limit?: number;
   type?: string;
