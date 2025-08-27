@@ -37,7 +37,10 @@ export default function WalletPage() {
   return (
     <div className="min-h-screen p-6">
       <div className="max-w-5xl mx-auto space-y-6">
-        <Card className="bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-xl rounded-2xl">
+        <Card
+          className="bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-xl rounded-2xl"
+          id="dashboard-stats"
+        >
           <CardHeader>
             <CardTitle className="text-lg md:text-2xl flex items-center gap-2">
               <Wallet className="w-7 h-7" />

@@ -21,19 +21,10 @@ const steps: Step[] = [
     target: "#logout-btn",
     content: "You can logout using this button.",
   },
-  // {
-  //   target: "#dashboard-stats",
-  //   content: "Here you can quickly view key performance stats at a glance.",
-  // },
   {
-    target: "#charts-section",
-    content: "This area shows visual insights and trends using graphs.",
+    target: "#dashboard-stats",
+    content: "Here you can quickly view key performance stats at a glance.",
   },
-  // {
-  //   target: "#table-search",
-  //   content:
-  //     "Use the search & filter options to quickly find specific records.",
-  // },
 ];
 
 const GuidedTour: React.FC = () => {
