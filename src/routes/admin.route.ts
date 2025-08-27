@@ -1,5 +1,5 @@
 import AllUsers from "@/pages/Dashboard/Admin/AllUsers";
-import { AllWallets } from "@/pages/Dashboard/Admin/AllWallets";
+import AllWallets from "@/pages/Dashboard/Admin/AllWallets";
 import Analytics from "@/pages/Dashboard/Admin/Analytics";
 
 export const adminSidebarItems = [

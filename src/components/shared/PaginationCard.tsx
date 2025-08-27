@@ -57,15 +57,15 @@ export default function PaginationCard({
   };
 
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="lg:flex items-center justify-between gap-3 py-4 lg:py-0">
       <p
-        className="text-muted-foreground flex-1 text-sm whitespace-nowrap"
+        className="text-muted-foreground flex-1 text-sm whitespace-nowrap text-center lg:text-left"
         aria-live="polite"
       >
         Page <span className="text-foreground">{currentPage}</span> of{" "}
         <span className="text-foreground">{totalPages}</span>
       </p>
-      <div className="grow">
+      <div className="grow my-4 lg:my-0">
         <Pagination>
           <PaginationContent>
             <PaginationItem>
@@ -113,7 +113,7 @@ export default function PaginationCard({
           </PaginationContent>
         </Pagination>
       </div>
-      <div className="flex flex-1 justify-end">
+      <div className="flex flex-1 justify-center lg:justify-end">
         <Select
           defaultValue={paginationItemsToDisplay.toLocaleString()}
           aria-label="Results per page"

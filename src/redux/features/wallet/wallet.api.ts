@@ -1,6 +1,10 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse } from "@/types";
-import type { IUpdateWalletStatusArg, IWallet } from "@/types/wallet.type";
+import type {
+  IUpdateWalletStatusArg,
+  IWallet,
+  IWalletsQueryParams,
+} from "@/types/wallet.type";
 
 export const walletApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,10 +19,11 @@ export const walletApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["WALLET"],
     }),
-    getAllWallets: builder.query<IResponse<IWallet[]>, null>({
-      query: () => ({
+    getAllWallets: builder.query<IResponse<IWallet[]>, IWalletsQueryParams>({
+      query: (params) => ({
         url: "/wallets/all-wallets",
         method: "GET",
+        params,
       }),
       providesTags: ["WALLET"],
     }),

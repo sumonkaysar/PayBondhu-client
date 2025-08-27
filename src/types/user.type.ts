@@ -38,3 +38,15 @@ export interface IUserStats {
   totalDeposits: number;
   totalWithdrawals: number;
 }
+
+export interface IUsersQueryParams {
+  _id?: string;
+  page?: number;
+  limit?: number;
+  status?: string;
+  searchTerm?: string;
+  sort?: string;
+  name?: string;
+  phoneNumber?: string;
+  role?: string;
+}

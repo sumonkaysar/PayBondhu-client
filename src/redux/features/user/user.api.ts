@@ -3,6 +3,7 @@ import type { IResponse } from "@/types";
 import type {
   IUpdateUserStatusArg,
   IUser,
+  IUsersQueryParams,
   IUserStats,
 } from "@/types/user.type";
 import { contactSchema } from "@/validations/contact.validation";
@@ -50,10 +51,11 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["USER"],
     }),
-    getAllUsers: builder.query<IResponse<IUser[]>, null>({
-      query: () => ({
+    getAllUsers: builder.query<IResponse<IUser[]>, IUsersQueryParams>({
+      query: (params) => ({
         url: "/users/all-users",
         method: "GET",
+        params,
       }),
       providesTags: ["ALL_USER"],
     }),

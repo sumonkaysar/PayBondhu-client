@@ -235,7 +235,7 @@ const TransactionTable = ({ transactions, setQueryParams, user }: IProps) => {
                         : tx.receiver.phoneNumber}
                     </TableCell>
                     <TableCell className="text-gray-800 dark:text-gray-300 font-bold">
-                      ৳ {tx.amount.toLocaleString()}
+                      ৳ {tx.amount.toFixed(2).toLocaleString()}
                     </TableCell>
                     <TableCell className="text-gray-800 dark:text-gray-300">
                       ৳ {tx.fee}
