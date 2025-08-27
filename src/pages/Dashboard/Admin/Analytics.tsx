@@ -58,7 +58,10 @@ const Analytics = () => {
         <h2 className="text-2xl md:text-4xl font-extrabold text-center md:text-left text-primary mb-8">
           Analytics
         </h2>
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 text-center md:text-left mb-6">
+        <div
+          className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 text-center md:text-left mb-6"
+          id="dashboard-stats"
+        >
           <Card className="rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-400 dark:to-blue-700 border border-blue-200 dark:border-blue-500 shadow-sm p-8 md:p-5 gap-0 md:gap-6">
             <div className="md:flex items-center gap-2">
               <User className="w-10 h-10 md:w-5 md:h-5 mx-auto md:mx-0 mb-3 md:mb-0 text-blue-700" />
