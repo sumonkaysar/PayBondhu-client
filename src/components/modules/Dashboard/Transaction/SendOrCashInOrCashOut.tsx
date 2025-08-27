@@ -37,7 +37,7 @@ const SendOrCashInOrCashOut = ({
     resolver: zodResolver(zodSchema as typeof transactionZodSchema),
     defaultValues: {
       receiver: "",
-      amount: 0,
+      amount: "",
     },
   });
 

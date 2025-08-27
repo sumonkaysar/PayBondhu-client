@@ -1,14 +1,16 @@
 import { z } from "zod";
 
 const getAmountZodSchema = () =>
-  z
-    .number({
-      error: (issue) =>
-        issue.input === undefined
-          ? "Amount is required"
-          : "Amount must be a number",
-    })
-    .positive({ error: "Amount must be a positive number" });
+  z.string({
+    error: (issue) =>
+      issue.input === undefined
+        ? "Amount is required"
+        : typeof issue.input !== "number"
+        ? "Amount must be a number"
+        : Number(issue.input) < 0
+        ? "Amount must be a positive number"
+        : "",
+  });
 
 const getTransactionZodSchema = (isAgent = false) =>
   z.object({

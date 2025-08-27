@@ -1,5 +1,5 @@
 import TransactionTable from "@/components/modules/Dashboard/Transaction/TransactionTable";
-import Loader from "@/components/shared/Loader";
+import DashboardLoader from "@/components/shared/DasboardLoader/DashboardLoader";
 import PaginationCard from "@/components/shared/PaginationCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetMyTransactionsQuery } from "@/redux/features/transaction/transaction.api";
@@ -19,11 +19,7 @@ const MyTransactions = () => {
     limit: 10,
   });
 
-  const {
-    data: userData,
-    isLoading: isUserLoading,
-    isError: isUserError,
-  } = useUserInfoQuery(null);
+  const { data: userData, isLoading: isUserLoading } = useUserInfoQuery(null);
   const user = userData?.data as IUser;
 
   const {
@@ -39,11 +35,7 @@ const MyTransactions = () => {
   }, [queryParams, refetch]);
 
   if (isUserLoading || isTransactionLoading) {
-    return <Loader />;
-  }
-
-  if (isUserError) {
-    return <Loader />;
+    return <DashboardLoader />;
   }
 
   return (
@@ -59,7 +51,7 @@ const MyTransactions = () => {
         transition={{ duration: 0.5 }}
         className="max-w-5xl mx-auto w-11/12"
       >
-        <Card className="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 shadow-xl rounded-2xl text-white py-2">
+        <Card className="bg-gradient-to-br from-green-300 via-emerald-300 to-teal-400 dark:from-gray-900 dark:via-slate-900 dark:to-slate-950 shadow-xl rounded-2xl dark:text-white py-2">
           <CardContent>
             <PaginationCard
               currentPage={transactionMeta?.page}

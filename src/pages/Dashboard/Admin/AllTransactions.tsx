@@ -1,5 +1,5 @@
 import TransactionTable from "@/components/modules/Dashboard/Transaction/TransactionTable";
-import Loader from "@/components/shared/Loader";
+import DashboardLoader from "@/components/shared/DasboardLoader/DashboardLoader";
 import PaginationCard from "@/components/shared/PaginationCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetAllTransactionsQuery } from "@/redux/features/transaction/transaction.api";
@@ -20,11 +20,7 @@ const AllTransactions = () => {
     limit: 10,
   });
 
-  const {
-    data: userData,
-    isLoading: isUserLoading,
-    isError: isUserError,
-  } = useUserInfoQuery(null);
+  const { data: userData, isLoading: isUserLoading } = useUserInfoQuery(null);
   const user = userData?.data as IUser;
 
   const {
@@ -52,11 +48,7 @@ const AllTransactions = () => {
   }, [queryParams, refetch]);
 
   if (isUserLoading || isTransactionLoading) {
-    return <Loader />;
-  }
-
-  if (isUserError) {
-    return <Loader />;
+    return <DashboardLoader />;
   }
 
   return (

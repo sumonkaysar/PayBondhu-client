@@ -1,69 +1,152 @@
-# React + TypeScript + Vite
+# 💸 PayBondhu — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**PayBondhu** is a **digital wallet web application** built using **React + TypeScript + Redux Toolkit + RTK Query + TailwindCSS**.  
+It connects with the **[PayBondhu Backend API](https://pay-bondhu-server.vercel.app/api/v1)** and provides a seamless UI for **Users, Agents, and Admins** to manage **wallets, transactions, and approvals**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo
 
-## Expanding the ESLint configuration
+[**PayBondhu App**](https://pay-bondhu.vercel.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🔗 Backend API
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Base URL: **https://pay-bondhu-server.vercel.app/api/v1**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Full Backend Documentation → [PayBondhu Backend](https://github.com/sumonkaysar/PayBondhu-server)
+
+---
+
+## 🚀 Features
+
+### **For Users**
+
+- 🔹 Register & Login
+- 🔹 Add Money from Bank/Card
+- 🔹 Send Money to Other Users
+- 🔹 Cash-In from Agent & Cash-Out to Agent
+- 🔹 View Wallet Balance
+- 🔹 View Transaction History
+- 🔹 Reset / Change Password
+
+### **For Agents**
+
+- 🔹 Register as Agent _(Admin Approval Required)_
+- 🔹 Cash-In to Users
+- 🔹 Cash-Out from Users
+- 🔹 View Wallet Balance
+- 🔹 View Transaction History
+
+### **For Admins**
+
+- 🔹 Dashboard Overview (Users, Agents, Transaction Volume & Count)
+- 🔹 Manage Users (View, Block, Unblock)
+- 🔹 Manage Agents (Approve, Suspend)
+- 🔹 View All Transactions with Filters & Search
+- 🔹 Adjust System Fees & Limits _(Optional)_
+- 🔹 Admin Profile Management
+
+---
+
+## 🛠️ Technologies Used
+
+- **React** + **TypeScript**
+- **Redux Toolkit** + **RTK Query** (State Management & API Calls)
+- **React Router** (Routing)
+- **TailwindCSS** + **ShadCN/UI** (Styling & UI Components)
+- **Recharts** (Analytics & Graphs)
+- **Sonner** (Notifications)
+- **React Hook Form + Zod** (Forms & Validation)
+- **Axios** (API Calls when needed)
+
+---
+
+## 📦 Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```
+git clone https://github.com/sumonkaysar/PayBondhu-client.git
+cd PayBondhu-client
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2️⃣ Install Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+bun install
+```
+
+### 3️⃣ Setup Environment Variables
+
+Create a .env file in the project root:
+
+```
+VITE_API_URL=https://pay-bondhu-server.vercel.app/api/v1
+```
+
+### 4️⃣ Run the App
+
+```
+bun dev
+```
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── assets/
+├── components/
+├── hooks/
+├── layouts/
+├── pages/
+├── routes/
+├── redux/
+├── utils/
+└── main.tsx
+```
+
+---
+
+## 🔑 User Roles & Test Credentials
+
+- **Admin:**
+
+  ```
+  phoneNumber: 00000000000
+  password: Admin123@
+  ```
+
+- **User:**
+
+  ```
+  User-1:
+  phoneNumber: 01700000000
+  password: Password123@
+  ```
+
+  ```
+  User-2:
+  phoneNumber: 01900000000
+  password: Password123@
+  ```
+
+- **Agent:**
+
+  ```
+  phoneNumber: 01500000000
+  password: Password123@
+  ```
+
+---
+
+### ✍️ Author
+
+**Sumon Kaysar** <br>
+📧 sumon.kaysar.sk@gmail.com <br>
+🌐 [Facebook](https://facebook.com/sumon.kaysar.sk) • [GitHub](https://github.com/sumonkaysar)
+
+---

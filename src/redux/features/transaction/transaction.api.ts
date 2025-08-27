@@ -5,17 +5,12 @@ import type {
   ITransaction,
   ITransactionsQueryParams,
 } from "@/types/transaction.type";
-import {
-  addOrWithdrawMoneyZodSchema,
-  transactionZodSchema,
-} from "@/validations/transaction.validation";
-import type z from "zod";
 
 export const transactionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     addMoney: builder.mutation<
       IResponse<ITransaction>,
-      z.infer<typeof addOrWithdrawMoneyZodSchema>
+      { through: string; amount: number }
     >({
       query: (data) => ({
         url: "/transactions/add-money",
@@ -26,7 +21,7 @@ export const transactionApi = baseApi.injectEndpoints({
     }),
     withdrawMoney: builder.mutation<
       IResponse<ITransaction>,
-      z.infer<typeof addOrWithdrawMoneyZodSchema>
+      { through: string; amount: number }
     >({
       query: (data) => ({
         url: "/transactions/withdraw",
@@ -37,7 +32,7 @@ export const transactionApi = baseApi.injectEndpoints({
     }),
     sendMoney: builder.mutation<
       IResponse<ITransaction>,
-      z.infer<typeof transactionZodSchema>
+      { receiver: string; amount: number }
     >({
       query: (data) => ({
         url: "/transactions/send-money",
@@ -48,7 +43,7 @@ export const transactionApi = baseApi.injectEndpoints({
     }),
     cashIn: builder.mutation<
       IResponse<ITransaction>,
-      z.infer<typeof transactionZodSchema>
+      { receiver: string; amount: number }
     >({
       query: (data) => ({
         url: "/transactions/cash-in",
@@ -59,7 +54,7 @@ export const transactionApi = baseApi.injectEndpoints({
     }),
     cashOut: builder.mutation<
       IResponse<ITransaction>,
-      z.infer<typeof transactionZodSchema>
+      { receiver: string; amount: number }
     >({
       query: (data) => ({
         url: "/transactions/cash-out",

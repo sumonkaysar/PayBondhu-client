@@ -1,10 +1,11 @@
 import AddMoney from "@/pages/Dashboard/AddMoney";
 import MyTransactions from "@/pages/Dashboard/MyTransactions";
-import Profile from "@/pages/Dashboard/Profile";
+import Settings from "@/pages/Dashboard/Settings";
 import CashOut from "@/pages/Dashboard/User/CashOut";
+import Profile from "@/pages/Dashboard/User/Profile";
 import SendMoney from "@/pages/Dashboard/User/SendMoney";
+import Wallet from "@/pages/Dashboard/User/Wallet";
 import WithdrawMoney from "@/pages/Dashboard/User/WithdrawMoney";
-import Wallet from "@/pages/Dashboard/Wallet";
 
 export const userSidebarItems = [
   {
@@ -19,6 +20,11 @@ export const userSidebarItems = [
         title: "Profile",
         url: "/user/profile",
         component: Profile,
+      },
+      {
+        title: "Settings",
+        url: "/user/settings",
+        component: Settings,
       },
     ],
   },

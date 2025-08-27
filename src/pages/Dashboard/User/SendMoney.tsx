@@ -11,10 +11,13 @@ const SendMoney = () => {
   const [sendMoney, { isLoading }] = useSendMoneyMutation();
 
   const handleSend = async (data: z.infer<typeof sendMoneyZodSchema>) => {
-    const toastId = toast.error("Processing...");
+    const toastId = toast.loading("Processing...");
 
     try {
-      const res = await sendMoney(data).unwrap();
+      const res = await sendMoney({
+        receiver: data.receiver,
+        amount: Number(data.amount),
+      }).unwrap();
       toast.success(res.message);
     } catch (err: unknown) {
       const error = err as IErrorResponse;

@@ -12,6 +12,8 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import RefundPolicy from "@/pages/RefundPolicy";
 import Register from "@/pages/Register";
 import TermsAndConditions from "@/pages/TermsAndConditions";
+import UnauthorizedPage from "@/pages/UnauthorizedPage";
+import WaitingApprovalPage from "@/pages/WaitingApprovalPage";
 import { adminSidebarItems } from "@/routes/admin.route";
 import { agentSidebarItems } from "@/routes/agent.route";
 import { userSidebarItems } from "@/routes/user.route";
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     Component: Register,
+  },
+  {
+    path: "/waiting",
+    Component: WaitingApprovalPage,
+  },
+  {
+    path: "/unauthorized",
+    Component: UnauthorizedPage,
   },
   {
     path: "/user",

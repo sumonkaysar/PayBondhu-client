@@ -1,8 +1,9 @@
 import AddMoney from "@/pages/Dashboard/AddMoney";
 import CashIn from "@/pages/Dashboard/Agent/CashIn";
+import Profile from "@/pages/Dashboard/Agent/Profile";
+import Wallet from "@/pages/Dashboard/Agent/Wallet";
 import MyTransactions from "@/pages/Dashboard/MyTransactions";
-import Profile from "@/pages/Dashboard/Profile";
-import Wallet from "@/pages/Dashboard/Wallet";
+import Settings from "@/pages/Dashboard/Settings";
 
 export const agentSidebarItems = [
   {
@@ -17,6 +18,11 @@ export const agentSidebarItems = [
         title: "Profile",
         url: "/agent/profile",
         component: Profile,
+      },
+      {
+        title: "Settings",
+        url: "/agent/settings",
+        component: Settings,
       },
     ],
   },

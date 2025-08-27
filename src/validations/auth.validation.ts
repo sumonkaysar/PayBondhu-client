@@ -28,12 +28,14 @@ export const changePasswordSchema = z
         message:
           "New password must include at least 1 uppercase, 1 lowercase, and 1 special character (! @ # $ % ^ & *)",
       }),
-    confirmPassword: z.string({
-      error: (issue) =>
-        issue.input === undefined
-          ? "Confirm password is required"
-          : "Confirm password must be a string",
-    }),
+    confirmPassword: z
+      .string({
+        error: (issue) =>
+          issue.input === undefined
+            ? "Confirm password is required"
+            : "Confirm password must be a string",
+      })
+      .nonempty("Confirm password can't be blank"),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Confirm password do not match",

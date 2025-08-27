@@ -36,7 +36,7 @@ const AddOrWithdrawMoneyForm = ({ onSubmit, isLoading, type }: IProps) => {
   const form = useForm<z.infer<typeof addOrWithdrawMoneyZodSchema>>({
     resolver: zodResolver(addOrWithdrawMoneyZodSchema),
     defaultValues: {
-      amount: 0,
+      amount: "",
       through: "",
     },
   });

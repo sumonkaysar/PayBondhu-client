@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Loader from "@/components/shared/Loader";
+import DashboardLoader from "@/components/shared/DasboardLoader/DashboardLoader";
 import PaginationCard from "@/components/shared/PaginationCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,10 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WalletTabs } from "@/consts/wallet.const";
-import { useGetAllWalletsQuery } from "@/redux/features/wallet/wallet.api";
+import {
+  useGetAllWalletsQuery,
+  useUpdateWalletBlockStatusMutation,
+} from "@/redux/features/wallet/wallet.api";
 import type { IMeta } from "@/types";
 import type { IWallet, IWalletsQueryParams } from "@/types/wallet.type";
 import dayjs from "dayjs";
@@ -29,6 +32,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import { motion } from "framer-motion";
 import { ArrowUpDown, MoreVertical } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 dayjs.extend(advancedFormat);
 
@@ -39,6 +43,8 @@ const AllWallets = () => {
     page: 1,
     limit: 10,
   });
+  const [blockWallet, { isLoading: isBlockLoading }] =
+    useUpdateWalletBlockStatusMutation();
   const {
     data: walletsData,
     isLoading,
@@ -75,12 +81,27 @@ const AllWallets = () => {
     handleQuery({ searchTerm: val });
   };
 
+  const handleToggleBlock = async (walletId: string, isBlocked: boolean) => {
+    const toastId = toast.loading(isBlocked ? "Blocking..." : "Unblocking...");
+    try {
+      const res = await blockWallet({ walletId, isBlocked }).unwrap();
+
+      if (res.success) {
+        toast.success(res.message, { id: toastId });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error.data.message || error.data, { id: toastId });
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     refetch();
   }, [queryParams, refetch]);
 
   if (isLoading) {
-    return <Loader />;
+    return <DashboardLoader />;
   }
 
   return (
@@ -202,10 +223,23 @@ const AllWallets = () => {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem>View</DropdownMenuItem>
-                            <DropdownMenuItem className="text-red-500">
-                              Block
-                            </DropdownMenuItem>
+                            {wallet.isBlocked ? (
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleToggleBlock(wallet._id, false)
+                                }
+                              >
+                                {isBlockLoading ? "Unblocking..." : "Unblock"}
+                              </DropdownMenuItem>
+                            ) : (
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleToggleBlock(wallet._id, true)
+                                }
+                              >
+                                {isBlockLoading ? "Blocking..." : "Block"}
+                              </DropdownMenuItem>
+                            )}
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>

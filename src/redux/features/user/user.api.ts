@@ -1,6 +1,7 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse } from "@/types";
 import type {
+  IAnalytics,
   IUpdateUserStatusArg,
   IUser,
   IUsersQueryParams,
@@ -66,6 +67,21 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["TRANSACTION", "USER"],
     }),
+    getAgentStats: builder.query<IResponse<IUserStats>, null>({
+      query: () => ({
+        url: "/users/agents/stats",
+        method: "GET",
+      }),
+      providesTags: ["TRANSACTION", "USER"],
+    }),
+    getAdminAnalytics: builder.query<IResponse<IAnalytics>, null>({
+      query: (params) => ({
+        url: "/users/admin/analytics",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["TRANSACTION", "USER"],
+    }),
     contactUs: builder.mutation<IResponse<null>, z.infer<typeof contactSchema>>(
       {
         query: (data) => ({
@@ -84,6 +100,8 @@ export const {
   useUpdateUserStatusMutation,
   useUserInfoQuery,
   useGetAllUsersQuery,
+  useGetAdminAnalyticsQuery,
+  useGetAgentStatsQuery,
   useGetUserStatsQuery,
   useContactUsMutation,
 } = userApi;

@@ -50,3 +50,43 @@ export interface IUsersQueryParams {
   phoneNumber?: string;
   role?: string;
 }
+
+export interface IAnalytics {
+  meta: {
+    from: Date;
+    to: Date;
+    months: Date[];
+  };
+  summary: {
+    totalUsers: number;
+    totalAgents: number;
+    totalTransactions: number;
+    totalVolumes: number;
+  };
+  monthlyVolume: {
+    month: Date;
+    count: number;
+  }[];
+  monthlyCount: {
+    month: Date;
+    count: number;
+  }[];
+  byType: {
+    type: string;
+    count: number;
+    totalAmount: number;
+  }[];
+  mostActiveType: {
+    type: string;
+    count: number;
+  };
+  monthWithHighestVolume: {
+    month: Date;
+    totalAmount: number;
+  };
+  dayWithHighestVolume: {
+    count: number;
+    date: Date;
+    totalAmount: number;
+  };
+}

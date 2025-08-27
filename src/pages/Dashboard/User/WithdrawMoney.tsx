@@ -11,9 +11,12 @@ const WithdrawMoney = () => {
   const handleWithdrawMoney = async (
     data: z.infer<typeof addOrWithdrawMoneyZodSchema>
   ) => {
-    const toastId = toast.error("Processing...");
+    const toastId = toast.loading("Processing...");
     try {
-      const res = await withdrawMoney(data).unwrap();
+      const res = await withdrawMoney({
+        through: data.through,
+        amount: Number(data.amount),
+      }).unwrap();
       toast.success(res.message, { id: toastId });
     } catch (err: unknown) {
       const error = err as IErrorResponse;

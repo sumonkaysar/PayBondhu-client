@@ -1,4 +1,4 @@
-import Loader from "@/components/shared/Loader";
+import DashboardLoader from "@/components/shared/DasboardLoader/DashboardLoader";
 import PaginationCard from "@/components/shared/PaginationCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,10 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Role, UserStatus, UserTabs } from "@/consts/user.const";
-import { useGetAllUsersQuery } from "@/redux/features/user/user.api";
+import {
+  useGetAllUsersQuery,
+  useUpdateUserStatusMutation,
+} from "@/redux/features/user/user.api";
 import type { IMeta } from "@/types";
 import type { IUser, IUsersQueryParams } from "@/types/user.type";
 import dayjs from "dayjs";
@@ -28,6 +31,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import { motion } from "framer-motion";
 import { ArrowUpDown, MoreVertical } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 dayjs.extend(advancedFormat);
 
@@ -37,6 +41,7 @@ const AllUsers = () => {
     page: 1,
     limit: 10,
   });
+  const [updateUserStatus] = useUpdateUserStatusMutation();
   const {
     data: usersData,
     isLoading,
@@ -73,12 +78,27 @@ const AllUsers = () => {
     });
   };
 
+  const handleUpdateUserStatus = async (userId: string, status: string) => {
+    const toastId = toast.loading("Updating...");
+    try {
+      const res = await updateUserStatus({ userId, status }).unwrap();
+
+      if (res.success) {
+        toast.success(res.message, { id: toastId });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error.data.message || error.data, { id: toastId });
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     refetch();
   }, [queryParams, refetch]);
 
   if (isLoading) {
-    return <Loader />;
+    return <DashboardLoader />;
   }
 
   return (
@@ -189,35 +209,95 @@ const AllUsers = () => {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem>View</DropdownMenuItem>
-                            {user.role == Role.AGENT &&
-                              (user.status == UserStatus.PENDING ? (
-                                <DropdownMenuItem>Approve</DropdownMenuItem>
+                            {user.role === Role.AGENT &&
+                              (user.status === UserStatus.PENDING ||
+                              user.status === UserStatus.SUSPENDED ? (
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleUpdateUserStatus(
+                                      user._id,
+                                      UserStatus.ACTIVE
+                                    )
+                                  }
+                                >
+                                  Approve
+                                </DropdownMenuItem>
                               ) : (
-                                user.status == UserStatus.ACTIVE && (
+                                user.status === UserStatus.ACTIVE && (
                                   <>
-                                    <DropdownMenuItem>Suspend</DropdownMenuItem>
-                                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                                    <DropdownMenuItem
+                                      onClick={() =>
+                                        handleUpdateUserStatus(
+                                          user._id,
+                                          UserStatus.SUSPENDED
+                                        )
+                                      }
+                                    >
+                                      Suspend
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                      onClick={() =>
+                                        handleUpdateUserStatus(
+                                          user._id,
+                                          UserStatus.DELETED
+                                        )
+                                      }
+                                    >
+                                      Delete
+                                    </DropdownMenuItem>
                                   </>
                                 )
                               ))}
-                            {user.role == Role.USER &&
-                              (user.status == UserStatus.ACTIVE ? (
+                            {user.role === Role.USER &&
+                              (user.status === UserStatus.ACTIVE ? (
                                 <>
-                                  <DropdownMenuItem>Block</DropdownMenuItem>
-                                  <DropdownMenuItem>Delete</DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() =>
+                                      handleUpdateUserStatus(
+                                        user._id,
+                                        UserStatus.BLOCKED
+                                      )
+                                    }
+                                  >
+                                    Block
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() =>
+                                      handleUpdateUserStatus(
+                                        user._id,
+                                        UserStatus.DELETED
+                                      )
+                                    }
+                                  >
+                                    Delete
+                                  </DropdownMenuItem>
                                 </>
                               ) : (
-                                user.status == UserStatus.BLOCKED && (
-                                  <DropdownMenuItem>Unblock</DropdownMenuItem>
+                                user.status === UserStatus.BLOCKED && (
+                                  <DropdownMenuItem
+                                    onClick={() =>
+                                      handleUpdateUserStatus(
+                                        user._id,
+                                        UserStatus.ACTIVE
+                                      )
+                                    }
+                                  >
+                                    Unblock
+                                  </DropdownMenuItem>
                                 )
                               ))}
-                            {user.status == UserStatus.DELETED && (
-                              <DropdownMenuItem>Undo Delete</DropdownMenuItem>
+                            {user.status === UserStatus.DELETED && (
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleUpdateUserStatus(
+                                    user._id,
+                                    UserStatus.ACTIVE
+                                  )
+                                }
+                              >
+                                Undo Delete
+                              </DropdownMenuItem>
                             )}
-                            <DropdownMenuItem className="text-red-500">
-                              Block
-                            </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>

@@ -11,10 +11,13 @@ const CashIn = () => {
   const [cashIn, { isLoading }] = useCashInMutation();
 
   const handleCashIn = async (data: z.infer<typeof cashInZodSchema>) => {
-    const toastId = toast.error("Processing...");
+    const toastId = toast.loading("Processing...");
 
     try {
-      const res = await cashIn(data).unwrap();
+      const res = await cashIn({
+        receiver: data.receiver,
+        amount: Number(data.amount),
+      }).unwrap();
       toast.success(res.message);
     } catch (err: unknown) {
       const error = err as IErrorResponse;
