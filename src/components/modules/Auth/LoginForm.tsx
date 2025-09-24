@@ -13,6 +13,7 @@ import PasswordInput from "@/components/ui/passwordInput";
 import { Role } from "@/consts/user.const";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import type { TRole } from "@/types/user.type";
 import { loginSchema } from "@/validations/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -34,6 +35,25 @@ const LoginForm = ({
       password: "",
     },
   });
+
+  const handleDefaultCredentials = (role: TRole) => {
+    const credentials = {
+      phoneNumber: "01700000000",
+      password: "Password123@",
+    };
+    switch (role) {
+      case Role.ADMIN:
+        credentials.phoneNumber = "00000000000";
+        credentials.password = "Admin123@";
+        break;
+      case Role.AGENT:
+        credentials.phoneNumber = "01500000000";
+        break;
+    }
+
+    form.setValue("phoneNumber", credentials.phoneNumber);
+    form.setValue("password", credentials.password);
+  };
 
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     const toastId = toast.loading("Logging In...");
@@ -79,6 +99,26 @@ const LoginForm = ({
         <p className="text-muted-foreground text-sm text-balance">
           Enter your details below to login to your account
         </p>
+      </div>
+      <div className="flex gap-2 w-full">
+        <Button
+          className="flex-1 text-white"
+          onClick={() => handleDefaultCredentials(Role.ADMIN as TRole)}
+        >
+          Admin
+        </Button>
+        <Button
+          className="flex-1 text-white"
+          onClick={() => handleDefaultCredentials(Role.AGENT as TRole)}
+        >
+          Agent
+        </Button>
+        <Button
+          className="flex-1 text-white"
+          onClick={() => handleDefaultCredentials(Role.USER as TRole)}
+        >
+          User
+        </Button>
       </div>
       <div className="grid gap-6">
         <Form {...form}>
