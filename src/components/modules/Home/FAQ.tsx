@@ -3,7 +3,7 @@ import { faqs } from "@/consts/home.const";
 
 const FAQ = () => {
   return (
-    <section id="faq" className="py-16 md:py-24">
+    <section id="faq" className="py-16 md:py-24 bg-slate-100 dark:bg-[#0a100f]">
       <div className="container mx-auto px-6">
         <h3 className="text-2xl md:text-3xl font-bold text-center mb-12">
           Frequently Asked Questions
