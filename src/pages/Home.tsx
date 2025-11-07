@@ -4,16 +4,17 @@ import CTA from "@/components/modules/Home/CTA";
 import FAQ from "@/components/modules/Home/FAQ";
 import Features from "@/components/modules/Home/Features";
 import Hero from "@/components/modules/Home/Hero";
+import HowItWorks from "@/components/modules/Home/HowItWorks";
 import Security from "@/components/modules/Home/Security";
 import Testimonials from "@/components/modules/Home/Testimonials";
-import TransactionSteps from "@/components/modules/Home/TransactionSteps";
 
 const Home = () => {
   return (
     <div>
       <Hero />
       <Features />
-      <TransactionSteps />
+      <HowItWorks />
+      {/* <TransactionSteps /> */}
       <Testimonials />
       <Benefits />
       <Security />
