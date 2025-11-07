@@ -9,7 +9,7 @@ const CTA = () => {
           Ready to Get Started?
         </h3>
         <p className="text-xl mb-8 text-blue-100">
-          Join millions of users who trust PayWallet for their daily
+          Join millions of users who trust PayBondhu for their daily
           transactions
         </p>
         <Link

@@ -7,7 +7,7 @@ const testimonials = [
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
     content:
-      "PayWallet has transformed how I manage my business finances. The instant transfers and low fees are game-changers!",
+      "PayBondhu has transformed how I manage my business finances. The instant transfers and low fees are game-changers!",
     rating: 5,
   },
   {
@@ -16,7 +16,7 @@ const testimonials = [
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
     content:
-      "I receive payments from clients worldwide, and PayWallet makes it seamless. Highly recommended!",
+      "I receive payments from clients worldwide, and PayBondhu makes it seamless. Highly recommended!",
     rating: 5,
   },
   {
@@ -39,7 +39,7 @@ const Testimonials = () => {
             Loved by Millions
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            See what our users have to say about their PayWallet experience
+            See what our users have to say about their PayBondhu experience
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
